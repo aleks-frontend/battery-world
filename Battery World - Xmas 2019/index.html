@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html data-sign="OSR">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css');
+
+      :root {
+        --black: #231F20;
+        --white: {{{account.colors.white}}};
+        --yellow: {{{account.colors.yellow}}};
+        --purple: {{{account.colors.purple}}};
+      }
+
+      /*
+      {{show-crop}}
+      {{ placeholder-opacity }}
+      {{ placeholder-image-1 }}
+      {{ placeholder-toggle-new }}
+      {{ placeholder-validation }}
+      {{ BW_product-name--bwx }}
+      {{#spreadsheet.BW_product-features--bwx}}{{/spreadsheet.BW_product-features--bwx}}
+      {{ BW_price--bwx }}
+      {{ BW_product-code--bwx }}
+      */
+
+      html {
+        font-family: 'Museo Sans', sans-serif;
+        color: var(--black);
+        word-break: break-word;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        height: 29pt;
+        background-color: var(--yellow);
+      }
+      
+      .is-export-mode .header {
+        opacity: 0;
+      }
+
+      .product {
+        position: relative;
+        flex: 1;
+        padding: 40pt 50pt 20pt;
+      }
+
+      .product__name {
+        margin-bottom: 25pt;
+        font-size: 51pt; 
+        line-height: 1em;
+        font-weight: 900;
+      }
+      
+      .u-no-product-name .product__name {
+        margin-bottom: 0;
+      }
+
+      .product__features {
+        margin-bottom: 40pt;
+        font-size: 20pt; 
+        line-height: 1em;
+      }
+      
+      .u-no-product-features .product__features {
+        margin-bottom: 0;
+      }
+
+      .price {
+        font-size: 150pt; 
+        line-height: 0.8em;
+        font-weight: 900;
+      }
+
+      ul {
+        padding-left: 18pt;
+      }
+
+      li {
+        position: relative;
+        margin-bottom: 10pt;
+      }
+
+      li:before {
+        content: "\2022";
+        position: absolute;
+        top: 0;  
+        left: -15pt;        
+      }
+
+      .product__code {
+        position: absolute!important;
+        right: 50pt;
+        left: 50pt;
+        bottom: 30pt;
+        font-size: 12pt;
+        text-align: right;
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 119pt;
+        padding: 0 50pt 27pt 50pt;
+        background-color: var(--purple);
+      }
+      
+      .is-export-mode .footer {
+        opacity: 0;
+      }
+
+      .footer__text {
+        margin-right: 9pt;
+        font-size: 17.5pt; 
+        line-height: 1em;
+        color: var(--white);
+      }
+
+      .logo {
+        width: 203pt;
+        object-fit: contain;
+        object-position: left bottom;
+        margin-bottom: 2pt;
+      }
+
+      sup {
+        line-height: 1em;
+        font-size: 0.45em;
+      }
+
+      .u-display-none {
+        display: none!important;
+      }
+      
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" class=" {{^spreadsheet.BW_product-features--bwx.lenght}}u-no-product-features{{/spreadsheet.BW_product-features--bwx.lenght}}
+                                                                   	{{^BW_product-name--bwx}}u-no-product-name{{/BW_product-name--bwx}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="header"></div><!--header-->
+          <div class="product">
+            <div class="product__inner" data-max-height="dynamic">
+              <div class="product__name">{{{ BW_product-name--bwx }}}</div><!--product__name-->
+              <div class="product__features">
+                <ul>
+                  {{#spreadsheet.BW_product-features--bwx}}
+                  <li>{{{ feature }}}</li>
+                  {{/spreadsheet.BW_product-features--bwx}}
+                </ul>
+              </div><!--product__features-->
+              <div class="{{^BW_price--bwx}}u-display-none{{/BW_price--bwx}} price textFit"><sup>$</sup><span id="jsPrice"></span></div>
+            </div><!--product__inner-->
+            <div class="product__code" data-max-line="1">{{{ BW_product-code--bwx }}}</div><!--product__code-->
+          </div><!--product-->
+          <div class="footer">
+            <div class="footer__text">Christmas. Powered by</div><!--footer__text-->
+            <img src="{{{account.logos.primary}}}" class="logo">
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+      // Display Price
+
+      var price = "{{{ BW_price--bwx }}}";
+      price = price.split(".");
+      let decimalValue = '';
+
+      price.forEach((item, index) => {
+        if(index !== 0) {
+          decimalValue += item;      
+        }
+      })
+
+      var priceContainer = document.getElementById("jsPrice")
+      if(price[1]) {
+        priceContainer.innerHTML += price[0] + decimalValue.sup();
+      } else {
+        priceContainer.innerHTML += price[0];
+      }
+
+      console.clear();
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
