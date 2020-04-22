@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A Frame - Dual Battery Fitting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <script src="prefixfree.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.0/dist/ResizeObserver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/javascript-debounce@1.0.0/dist/javascript-debounce.min.js"></script>  
+
+    <style>
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Museo Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      
+      html {
+        overflow: hidden;
+      }
+
+      body {
+      }
+
+      .bleed {
+        background: rgba(66, 51, 147, 1);
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 900;
+        font-family: 'Museo Sans', sans-serif;
+      }
+
+      h1 { font-size: 7.141em; line-height: 0.8em; }
+      h2 { font-size: 2.617em; line-height: 1em; }
+
+      sup { font-size: 0.5em; }
+
+      small { font-size: 0.45em; }
+
+      ul {
+        padding-left: 0.1em;
+        margin: 0.6em 0 0 0;
+        line-height: 1.3em;
+      }
+
+      li {
+        margin-bottom: 0.3em;
+        display: flex;
+      }
+
+      li:before {
+        content: "\2022";
+        margin-right: 0.6em;
+      }
+
+      .white {
+        color: rgb(255, 255, 255);
+      }
+
+      .primary-violet {
+        color: rgba(66, 51, 147, 1);
+      }
+
+      .primary-gold {
+        color: rgba(253, 187, 48, 1);
+      }
+
+      .fit {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 3mm;
+        position: absolute;
+      }
+
+      .wrapper {
+        margin: 0 !important;
+        padding: 9.11em 2.49em 4.2em 2.55em;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        height: 100%;
+      }
+
+      /* Customs */
+      .legend {
+        border-radius: 2.5em;
+        padding: 1em 3.6em 6em 3.7em;
+        flex-direction: row;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+
+      .wave {
+        position: absolute;
+        top: 0;
+        transform: translateY(-49%);
+        left: 4.7em;
+      }
+      .wave img {
+        position: relative;
+        height: 98px;
+      }
+      .battery {
+        position: absolute;
+        bottom: -0;
+        transform: translateY(53%);
+        right: 1.35em;
+        background: rgba(66, 51, 147, 1);
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 2em;
+        width: 11.12em;
+        /* Negative Margin to ensure lines connect */
+        margin: 0 -1px;
+      }
+      /* A2 Screen Adjustments */
+      /* A4 Print Adjustments */
+      @media all and (width: 16.5in) {
+        .wave {
+          transform: translateY(-49%);
+        }
+      }
+      @media all and (min-width: 220.87mm) and (max-width: 230.87mm) {
+        .wave {
+          transform: translateY(-50%);
+        }
+        .wave img {
+          height: 53px;
+        }
+        .battery {
+          transform: translateY(57%);
+        }
+      }
+      @media all and (min-width: 205mm) and (max-width: 215mm) {
+        .wave {
+          transform: translateY(-50%);
+        }
+        .wave img {
+          height: 53px;
+        }
+        .battery {
+          transform: translateY(57%);
+        }
+      }
+      /* A3 Print Adjustments */
+      /* A3 Screen Adjustments */
+      @media all and (min-width: 305.87mm) and (max-width: 317.87mm) {
+        .wave {
+          transform: translateY(-49.3%);
+        }
+        .wave img {
+          height: 70px;
+        }
+        .battery {
+          transform: translateY(54%);
+        }
+      }
+      @media all and (min-width: 11.6in) and (max-width: 11.7in) {
+        .wave {
+          transform: translateY(-49.3%);
+        }
+        .wave img {
+          height: 70px;
+        }
+        .battery {
+          transform: translateY(54%);
+        }
+      }
+
+      .wave .mask {
+        display: block;
+        height: 100%;
+        width: 90%;
+        background: rgba(64, 51, 147, 1);
+        position: absolute;
+        margin: 0 10px;
+      }
+
+      .logo {
+        position: absolute;
+        top: -8.956em;
+        /*margin-left: 0.25em;*/
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .logo img { position: relative; }
+
+      .logo .mask {
+        display: block;
+        height: 1em;
+        width: 93%;
+        background: rgba(64, 51, 147, 1);
+        position: absolute;
+        top: 8.7em;
+        margin-left: 0.8em;
+      }
+
+      .logo .mask:before,
+      .logo .mask:after {
+        width: 0.9em;
+        height: 0.9em;
+        background: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/fd5cc50be43d099711ba88219d2cf6fe/dot.svg") center no-repeat;
+        background-size: 100%;
+        display: block;
+        content: "";
+        position: absolute;
+        top: -0.35em;
+        left: -0.45em;
+      }
+
+      .logo .mask:after {
+        left: auto;
+        right: -0.45em;
+      }
+
+      .price { font-family: 'Museo Sans', sans-serif; }
+      
+      .battery img { 
+        width: calc(100% - 2rem); /* 1rem is the combined width of the plus and minus */
+		padding: 0 1rem;
+      }
+
+         .plus,
+      .minus {
+        height: 1rem;
+        width: 1rem;
+        position: relative;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+      }
+      .plus {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2ee7432835134a59b3cf0dc7895e65d8/plus.svg');
+      }
+      .minus {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/56fcdaec07b4c55402a27534df0f7ec7/minus.svg');
+      }
+      .content {
+        padding: 1.3em 1em;
+        height: 100%;
+        width: 100%;
+        color: #231F20;
+        font-size: 2em;
+        font-family: 'Museo Sans', sans-serif;
+        overflow: visible;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 1.1em;
+        text-align: center;
+    	align-items: center;
+      }
+
+      /* 4UP */
+      .four-up {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+      }
+
+      .row .wrapper {
+        width: 50%;
+        font-size: 0.5em;
+      }
+
+      /* Media Queries */
+      @media (max-aspect-ratio: 1/3) {
+        html {
+          font-size: 10vw !important;
+        }
+      }
+
+      @media (min-aspect-ratio: 2/1) {
+        #wrapper {
+          justify-content: center;
+          align-items: center;
+          flex-direction: row;
+        }
+      }
+
+      @media (min-aspect-ratio: 4/1) {
+        #wrapper {
+          justify-content: space-around;
+        }
+      }
+
+      @media (min-aspect-ratio: 8/1) {
+        html {
+          font-size: 20vh !important;
+        }
+      }
+
+      /* 1UP AUTO */
+      .auto .logo { top: -8.956em; margin-left: 0.3em; }
+      .auto .logo img { height: 15.6956em; }
+
+      /* 1UP BOAT */
+      .boat .logo { 
+        top: -8.08em; 
+        margin-left: 0.05em; 
+      }
+      .boat .logo img { height: 9.5em; }
+      .boat .logo .mask { 
+        width: 66%;
+        margin-left: 3.4em;
+        top: 7.78em; 
+      }
+      .boat .legend { padding-top: 0em; }
+
+      /* 1UP CAMP */
+      .camp .logo { 
+        top: -13.8em; 
+        margin-left: 0.1em; 
+      }
+      .camp .logo img { height: 15.1em; }
+      .camp .logo .mask { 
+        width: 97%;
+        top: 13.5em;
+        margin: 0;
+      }
+      .camp .legend { padding-top: 0em; }
+
+      /* 1UP MOTO */
+      .moto .logo { top: -10.78em; margin-left: -0.35em; }
+      .moto .logo img { height: 14.55em; }
+      .moto .logo .mask { 
+        width: 25.9em; 
+        top: 10.48em; 
+        margin-left: 0.1em; 
+      }
+      .moto .legend { padding-top: 0em; }
+      
+      /* 1UP CAMPAIGN */
+      .campaign .wrapper { padding-top: 9.1em; }
+      .campaign .logo { 
+        top: -6.9em;
+        margin-left: -0.35em;
+        width: 37.3em;
+      }
+      .campaign .logo img { height: 9.75em; }
+      .campaign .logo .mask { 
+        width: 37em;
+        top: 6.38em;
+        margin-left: 0.2em;
+      }
+      
+      .campaign .logo .mask:before, .campaign .logo .mask:after {
+        display: none;
+      }
+      
+      .campaign .legend { padding-top: 0em; }
+
+      .overflow-container {
+        overflow: visible;
+        display: flex;
+    	align-items: center;
+      }
+
+      .overflow{border:1px dashed red;position:relative}.overflow::before,.overflow:hover:after{position:absolute;right:5px;box-sizing:border-box}.overflow h1,.overflow h2,.overflow h3,.overflow h4,.overflow h5,.overflow h6,.overflow li,.overflow p{color:red!important}.overflow::before{content:'+';z-index:5;top:5px;height:15px;width:15px;border:1px solid red;color:red;padding:2px 2px 2px 3px;font-size:13px;line-height:8px;background-color:#fff;text-align:center}.overflow:hover:before{background-color:red;color:#fff}.overflow:after{display:none}.overflow:hover:after{display:block;content:'There is overset content in this column. Please remove it';top:25px;background-color:#000;color:#fff;border-radius:2px;padding:5px;font-size:11px;font-weight:400;line-height:1.1em;text-align:right;width:15em}
+
+      .fittext {
+        width: 100%;
+      }
+
+      .fittext h1 {
+        white-space: nowrap;
+        display: inline-block;	
+      }
+      
+      .placeholder {
+        display: none;
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/e6749d3053a0b3c96c156dfd2f63d4ff/Screen%20Shot%202018-09-24%20at%2010.27.38%20am.png');
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-size: cover;
+        background-position: center;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0;
+      }
+      .product-overflow h2, .price {
+        color: #eeb847;
+        text-transform: uppercase;
+        font-size: 3.1em;
+        margin-right: auto;
+        margin-left: auto;
+        transform: translateY(0.56em);
+        line-height: 0.9em;
+      }
+      .product-overflow h3 {
+        color: white;
+        font-size: 1.23em;
+        text-transform: uppercase;
+        margin-top: 20px;
+      }
+      .price {
+        font-size: 3.6em;
+        transform: translateY(-0.2em)
+      }
+      .product-overflow .editable {
+        overflow-wrap: normal !important;
+      }
+      .product-image {
+        background-size: 80%;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 13em;
+        width: 18em;
+        margin-right: auto;
+    	margin-left: auto;
+      }
+      .custom-image {
+        margin-top: 0.3em;
+        width: 85%;
+        background-size: 80%;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 13em;
+        margin-right: auto;
+    	margin-left: auto;
+        transform: translateY(1.3em);
+      }
+      .product-no-choice {
+        height: 0em;
+      }
+      .product-ultra-alkaline {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/adf878a295f334b0353c39c47943a39d/ultra_alkaline_pack.svg');
+      }
+      .product-yuasa-power {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/e185110bcbb9f489abbf85d7e16aa5bd/yuasa_power_series.svg');
+      }
+      .product-yuasa-nbn {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/75df37a3b09924b3d3b101273aa826ab/yuasa_nbn_battery.svg');
+        background-size: 103%;
+      }
+      .product-yuasa-flooded {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/a848f3f4ac7df356cc2c366cc1c30b6f/yuasa_flooded_deep.svg');
+        background-size: 110%;
+      }
+      .code { 
+        color: white;
+        font-size: 1.44em;
+        text-transform: uppercase;
+        margin-top: -0.4em;
+        transform: translateY(-0.1em);
+      }
+      .title-wrapper {
+        max-height: 9em;
+      }
+      .name-wrapper {
+        max-height: 3.2em;
+        transform: translate(0em, -0.21em);
+      }
+      .warranty-wrapper {
+        background-color: red;
+        border-radius: 0.5em;
+        margin-bottom: 0.2em;
+        width: min-content;
+        white-space: nowrap;
+        padding-left: 1em;
+        padding-right: 1em;
+        margin-right: auto;
+        margin-left: auto;
+      }
+      .warranty-wrapper h3 {
+        font-size: 1em;
+      }
+    </style>
+  </head>
+  <body style="background: white;">
+    <div class="page">
+      <div class="bleed center-children">
+        <div class="placeholder"></div>
+        <div class="fit">
+          <!--Placeholder-->
+          <div style="display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/bdda51db2c3141ec30249ac770c16247/Untitled-1.jpg'); background-size: cover; background-position: center; z-index: 100; opacity: 0.7; pointer-events: none;"></div>
+          <div class="border" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/a9f6255da1cef5b94f23c72c7f7c250c/christmas_border_landscape.svg'); background-size: 103%; background-repeat: no-repeat; background-position: center; z-index: 100; pointer-events: none; background-position-x: -2em;"></div>
+          <div class="wrapper">
+            <div class="legend" id="legend">
+              <div id="header-elements"></div>
+              <div class="content">
+                <div class="overflow-container">
+                  <div class="product-overflow">
+                    <div class="title-wrapper">
+                    	<h2 class="check-overflow">{{{ product-title }}}</h2>
+                    </div>
+                    {{#product-image}}
+                      	<img class="custom-image" src="{{ product-image }}" />
+                    {{/product-image}}
+                    <div class="name-wrapper">
+                    	<h3 class="check-overflow">{{{ product-name }}}</h3>
+                    </div>
+                    {{#warranty-length}}
+                    <div class="warranty-wrapper">
+                    	<h3>{{{ warranty-length }}} month warranty</h3>
+                    </div>
+                    {{/warranty-length}}
+					<p class="code">
+                  		<small>{{{ product-code }}}</small>
+                	</p>
+                    {{#price}}
+                      <div class="fittext">
+                        <h1 class="price fittext-price"><sup>$</sup><span id="jsPrice"></span></h1>
+                      </div>
+                    {{/price}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div><!--bleed-->
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}};
+
+      if (window.showCrop) {
+        document.body.classList.add("print")
+      } else {
+        document.body.classList.add("screen")
+      }
+
+      setInterval(function(){ 
+        checkHeight(document.getElementsByClassName('check-overflow'));
+        fittext(document.getElementsByClassName('fittext-price'));
+      }, 1000);
+      
+      // FIT TEXT FUNC
+      function fittext(els){
+        for(var i = 0; i < els.length; ++i) {
+          while($(els[i]).width() > $(els[i]).parent().width()) {
+            var size = parseInt($(els[i]).css('font-size')); 
+            $(els[i]).css('font-size', size - 1); 
+          }
+        }
+      }
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true');
+          }
+        }
+      }
+
+      if (document.body.classList.contains('auto')) {
+        document.getElementById('legend').innerHTML += '<div class="wave"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/22f7332f9ca969f22b01969f7db62d8e/wave.svg" alt="" /> </div> <div class="logo"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3160ec1e92112f20c624599eee5c309f/auto.svg" alt=""/> </div>'
+      } else if (document.body.classList.contains('moto' && false)) {
+        document.getElementById('legend').innerHTML += '<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2df1988a7d5ab1d8f69540990e6dbc43/moto.svg" alt=""/> </div>'
+      } else if (document.body.classList.contains('camp' && false)) {
+        document.getElementById('legend').innerHTML += '<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/7983774d347b0cf1f95be400b399fb45/camp.svg" alt=""/> </div>'
+      } else if (document.body.classList.contains('boat')) {
+        document.getElementById('legend').innerHTML += '<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/49a6e90a616f4cc4a1faa140cf43f241/boat.svg" alt=""/> </div>'
+      } else if (document.body.classList.contains('campaign') && false) {
+        document.getElementById('legend').innerHTML += '<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/051ae17725f0878d3847b9f4bc9312c4/Asset%201.svg" alt=""/> </div>'
+      }
+
+      var price = "{{{ price }}}";
+      price = price.split(".");
+
+      var priceContainer = document.getElementById("jsPrice");
+      priceContainer.innerHTML += price[0] + price[1].sup()
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
