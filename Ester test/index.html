@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html data-sign="OSM" async>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      /* Inputs Order
+      {{show-crop}}
+      {{placeholder-opacity}}
+      {{placeholder-image-1}}
+      {{placeholder-toggle-new}}
+      {{placeholder-validation}}
+      {{{BW_product-name--pse}}}
+      {{spreadsheet.BW_product-features--pse}}
+      {{{BW_previous-price--pse}}}
+      {{{BW_price--pse}}}
+      {{{BW_product-code--pse}}}
+      */
+
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css');
+
+      html {
+        font-family: 'Museo Sans';
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit { padding: 5.19rem 1.56rem 2.36rem; }
+
+      .background {
+        position: absolute;
+        top: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        left: 3mm;
+        background-image: url('https://files.outfit.io/media_library_items/165929/batteryworld-overlay.png');
+        background-size: cover;
+        pointer-events: none;
+      }
+      .is-export-mode .background { display: none; } 
+
+      .content__container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 0.61rem 0.60rem 1.40rem;
+        height: 100%;
+      }
+
+      .heading {
+        margin-bottom: 0.28rem;
+        font-size: 1.23rem;
+        font-weight: 900;
+        line-height: 1em;
+      }
+
+      .productFeatures {    
+        margin-left: 0.67rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .productFeatures__item {
+        margin-bottom: 0.14rem;
+        font-size: 0.46rem;
+        font-weight: 500;
+        line-height: 1.3em;
+        text-indent: -0.47rem;
+      }
+      .productFeatures__item:last-child { margin-bottom: 0; }
+
+      .productFeatures__item:before {
+        content: "\2022";
+        margin-right: 0.28rem;
+      }
+
+      .prePrice {
+        margin-bottom: 0.7em;
+        position: relative;
+        font-size: 0.68rem;
+        font-weight: 900;
+        line-height: 1.2em;
+      }
+
+      #jsPrevPrice {
+        position: relative;
+        margin-left: 0.123rem;
+      }
+      
+      #jsPrevPrice:before {
+        position: absolute;
+        content: "";
+        left: -0.245rem;
+        top: 0;
+        right: -0.280rem;
+        bottom: 0.053rem;
+        background: url(https://files.outfit.io/media_library_items/165958/vert-line-5.png) no-repeat top center;
+        background-size: 100% 75%;
+      }
+
+      .prePrice sup {
+        top: -0.7em;
+        font-size: 0.5em; 
+      }
+
+      .price {
+        position: relative;
+        width: 100%;
+      }
+
+      .price__inner {
+        font-size: 3.35rem;
+        font-weight: 900;
+        line-height: 0.8em;
+      }
+
+      .price sup { 
+        font-size: 0.5em;
+        line-height: 1.2em;
+        vertical-align: 0.44rem;
+      }
+
+      .code {
+        max-width: 4.55rem;
+        position: absolute !important;
+        bottom: 0.82rem;
+        right: 0.60rem;
+        font-size: 0.21rem;
+        font-weight: 500;
+        line-height: 1.2em;
+        text-align: right;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="content__container">
+            <div class="content" data-max-height="dynamic">
+              <div class="heading">{{{BW_product-name--pse}}}</div><!--heading-->
+              <div class="productFeatures">
+                {{#spreadsheet.BW_product-features--pse}}
+                <div class="productFeatures__item">{{feature}}</div><!--productFeatures__item-->
+                {{/spreadsheet.BW_product-features--pse}}
+              </div><!--productFeatures-->
+              {{#BW_previous-price--pse}}
+              <span class="prePrice textFit">Was  <sup>$</sup><!--prePrice__sup--><span id="jsPrevPrice"></span><!--jsPrevPrice--></span><!--prePrice-->
+              {{/BW_previous-price--pse}}
+              {{#BW_price--pse}}
+              <div class="price"><span class="price__inner textFit"><sup>$</sup><span id="jsPrice"></span></span></div><!--price-->
+              {{/BW_price--pse}}
+            </div><!--content-->
+            {{#BW_product-code--pse}}
+            <div class="code" data-max-line="1">{{{BW_product-code--pse}}}</div><!--code-->
+            {{/BW_product-code--pse}}
+          </div><!--content__container-->
+          <div class="background"></div><!--background-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+      <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+      
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+      
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+      
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+      
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+
+
+
+      // for price
+      var price = "{{{BW_price--pse}}}";
+      price = price.split(".");
+      console.log(price);
+      var priceContainer = document.getElementById("jsPrice");
+      if(price[1]){
+        priceContainer.innerHTML += price[0] + price[1].sup();
+      }
+      else {
+        priceContainer.innerHTML += price[0];
+      }
+
+      // for previous price
+      var prevPrice = "{{{BW_previous-price--pse}}}";
+      prevPrice = prevPrice.split(".");
+
+      var prevPriceContainer = document.getElementById("jsPrevPrice");
+      if(prevPrice[1]){
+        prevPriceContainer.innerHTML += prevPrice[0] + prevPrice[1].sup();
+      }
+      else {
+        prevPriceContainer.innerHTML += prevPrice[0];
+      }
+
+
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+    <script type="text/javascript">
+      // Add many fallbacks for Print Ready
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.dispatchEvent(new Event('printready'));
+      });
+
+      setTimeout(function() {
+        document.dispatchEvent(new Event('printready'));
+      }, 1500);
+
+      document.dispatchEvent(new Event('printready'));
+    </script>
+
+  </body>
+</html>
