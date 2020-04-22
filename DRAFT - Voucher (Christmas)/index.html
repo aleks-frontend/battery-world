@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A Frame - Dual Battery Fitting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <script src="prefixfree.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.0/dist/ResizeObserver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/javascript-debounce@1.0.0/dist/javascript-debounce.min.js"></script>  
+    <script src="https://outfit-assets-production.s3.amazonaws.com/scripts/textoverflow.0.0.1.min.js" type="text/javascript"></script>
+
+    <style>
+      .overflow {
+          border: 1px dashed red;
+          position: relative; 
+      }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p,
+      .overflow span,
+      .overflow li { color: red !important; }
+      .overflow::before {
+          content: '+';
+          position: absolute;
+          z-index: 5;
+          top: 5px;
+          right: 5px;
+          height: 15px;
+          width: 15px;
+          border: 1px solid red;
+          color: red;
+          padding: 2px 2px 2px 3px;
+          box-sizing: border-box;
+          font-size: 13px;
+          text-align: center;
+          line-height: 8px;
+          background-color: white;
+          text-align: center; }
+      .overflow:hover:before {
+          background-color: red;
+          color: white; 
+      }
+      .overflow:after {
+          display: none; 
+      }
+      .overflow:hover:after {
+          display: block;
+          content: 'There is overset content in this column. Please remove it';
+          position: absolute;
+          top: 25px;
+          right: 5px;
+          background-color: black;
+          color: white;
+          border-radius: 2px;
+          padding: 5px;
+          box-sizing: border-box;
+          font-size: 11px;
+          font-weight: 400;
+          line-height: 1.1em;
+          text-align: right;
+          width: 15em;
+      }
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Museo Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+      }
+
+      .bleed {
+        background: rgba(66, 51, 147, 1);
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 900;
+        font-family: 'Museo Sans', sans-serif;
+      }
+
+      h1 { font-size: 7.141em; line-height: 0.8em; }
+      h2 { font-size: 2.617em; line-height: 1em; }
+
+      sup { font-size: 0.5em; }
+
+      small { font-size: 0.45em; }
+
+      ul {
+        padding-left: 0.1em;
+        margin: 0.6em 0 0 0;
+        line-height: 1.3em;
+      }
+
+      li {
+        margin-bottom: 0.3em;
+        display: flex;
+      }
+
+      li:before {
+        content: "\2022";
+      }
+
+      .white {
+        color: rgb(255, 255, 255);
+      }
+
+      .primary-violet {
+        color: rgba(66, 51, 147, 1);
+      }
+
+      .primary-gold {
+        color: rgba(253, 187, 48, 1);
+      }
+
+      .fit {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 3mm;
+        position: absolute;
+      }
+      
+      .title-block {
+        display: flex;
+        flex-direction: column;
+        height: 50%;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        padding-top: 6em;
+      }
+      
+      .title-block h1 {
+        font-size: 6.6em;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+      }
+      
+      .title-block h3 {
+        font-size: 3.58em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      
+      .title-block span {
+        color: #eeb847;
+      }
+      
+      .disclaimer-block {
+        position: absolute;
+        bottom: -1em;
+        color: white;
+        font-size: 2.1em;
+        max-height: 6em;
+        margin: 3.9em;
+      }
+      
+      .back h1 {
+          font-size: 7.5em;
+          text-transform: uppercase;
+          color: #eeb847;
+          padding-top: 0.5em;
+          margin-bottom: 5px;
+      }
+      
+      .back h3 {
+          position: absolute;
+          bottom: 2.1em;
+          transform: translateX(-8.9em);
+          font-size: 2.6em;
+          color: white;
+      }
+      
+      .instructions-block {
+          max-width: 259px;
+          max-height: 10.7em;
+          color: white;
+          font-size: 2.0em;
+      }
+      
+      .instructions-block strong {
+          font-weight: 900;
+          color: #eeb847;
+      }
+      @media (max-width: 85mm) {
+        .instructions-block {
+    	  max-width: 219px;
+        }
+       .disclaimer-block {
+          bottom: -10px; 
+      	}
+      }
+      @media (min-width: 99mm) {
+        .instructions-block {
+    	  max-width: 230px;
+          transform: translateY(-3px);
+        }
+      }
+      
+    </style>
+  </head>
+  <body class="print">
+    <div class="page front">
+      <div class="bleed center-children">
+        <div class="fit">
+          <!-- Placeholder -->
+          <!--<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/3789ab7f755b284fa690beae449bd98a/BW%200742R_55x85%20Voucher_Page_1%20copy.png'); background-size: cover; background-position: center; z-index: 100; opacity: 0.7; pointer-events: none;"></div>-->
+          <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/82057c8c5b2fb8519f101752ca9af5ce/christmas_banner.svg'); background-size: 122%; background-repeat: no-repeat; background-position: center; background-position-y: 15.3em; background-position-x: -11.4em;"></div>
+            <div class="title-block">
+              <h1>Merry Christmas</h1>
+              <h3>From The <span>Batteryologists</span></h3>
+            </div>
+            <div class="disclaimer-block">
+              	<div class="wrapper check-overflow">
+            		{{{disclaimer-block}}}
+                </div>
+            </div>
+          </div>
+        </div>
+      </div><!--bleed-->
+    </div><!--page-->
+	<div class="page back">
+      <div class="bleed center-children">
+        <div class="fit">
+          <!-- Placeholder -->
+          <!--<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/f75327b83ae20449dcbf2d6f05fbcb59/BW%200742R_55x85%20Voucher_Page_2%20copy.png'); background-size: cover; background-position: center; z-index: 100; opacity: 0.7; pointer-events: none;"></div>-->
+          <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/04dda2345b7f7c0980b6b18eaf91ca5b/christmas_border_small.svg'); background-size: 100%; background-repeat: no-repeat; background-position: center;"></div>
+            <h1>A Gift For You</h1>
+            <div class="instructions-block">
+              	<div class="wrapper check-overflow">
+            		{{{instructions-block}}}
+                </div>
+            </div>
+            <h3>13 17 60</h3>
+          </div>
+        </div>
+      </div><!--bleed-->
+    </div><!--page-->
+    
+    <script>
+      window.showCrop = {{show-crop}};
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+
+    <script>
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+      
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+        console.log('checking overflow');
+      } setInterval(loop, 1000);
+    </script>
+
+    <script>
+      $.fn.chunk = function(size) {
+        var arr = [];
+        for (var i = 0; i < this.length; i += size) {
+          arr.push(this.slice(i, i + size));
+        }
+        return this.pushStack(arr, "chunk", size);
+      }
+      
+      var prices = Array.prototype.slice.call(document.querySelectorAll('.jsPrice'))
+
+      prices.forEach(function(price) {
+        var text = price.innerText;
+        var priceSplit = text.split(".");
+        var priceSplitFormatting = priceSplit[0] + priceSplit[1].sup();
+        console.log(priceSplitFormatting)
+        price.innerHTML = priceSplitFormatting
+      })
+    </script>
+  </body>
+</html>
