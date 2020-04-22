@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A Frame - Dual Battery Fitting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <script src="prefixfree.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.0/dist/ResizeObserver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/javascript-debounce@1.0.0/dist/javascript-debounce.min.js"></script>  
+
+    <style>
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Museo Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        color: white;
+      }
+
+      h1, h2, h3, h4, h5, h6 { font-weight: 900; }
+      
+      h1 { 
+        /* font-size: 4em;  */
+        line-height: 1;
+      }
+
+      h2 { 
+        /* font-size: 4em;  */
+        line-height: 1;
+        color: #fdb913; 
+      }
+
+      .background {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        background-color: {{{account.colors.purple}}}
+      }
+
+      .background-fit {
+        padding: 0.7em 1em 0.57em;
+      }
+
+      .logo-frame {
+        height: 100%;
+        width: 100%;
+      }
+
+      .content-container {
+        position: absolute;
+        top: 1.8em;
+        bottom: 1.8em;
+        left: 1.9em;
+        right: 1.9em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .icon-container {
+        width: 100%;
+        flex: 1 1 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      .icon-container img {
+        width: 100%;
+        max-height: 100%;
+      }
+
+      .js-fittext { 
+        font-size: 10pt;
+        line-height: 0;
+        width: 100%; 
+      }
+
+      .js-fittext h1, .js-fittext h2, .js-fittext h3, .js-fittext h4, .js-fittext h5 {
+        line-height: 0.9;
+        text-transform: uppercase;
+      }
+
+      .js-fittext h3, .js-fittext h4, .js-fittext h5 {
+        color: {{{account.colors.yellow}}};
+      }
+
+      .row-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .row-wrapper .js-fittext:nth-child(1) {
+        width: 25%;
+        margin-right: 3%;
+        padding-top: 10px;
+      }
+
+      .row-wrapper .js-fittext:nth-child(2) {
+        width: 70%;
+        line-height: 0.8;
+        padding-top: 0px;
+      }
+      
+      #bigtext-2, #bigtext-3 { color: {{{account.colors.yellow}}}; }
+
+    </style>
+  </head>
+  <body style="background: white;">
+    <div class="page">
+      <div class="bleed center-children">
+
+        <div class="background background-fit" style="background-color: {{{account.colors.purple}}}">
+
+          <img class="logo-frame" src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/efb59bc5944ebdebf21bdcd374f27c2b/logo_frame.svg">
+          <div class="content-container">
+            <div>
+              {{#poster-headline}}
+              <div class="js-fittext" id="bigtext-1">
+                {{{ poster-headline }}}
+              </div>
+              {{/poster-headline}}
+            </div>
+            <div class="icon-container"><img src="{{{ icon }}}"></div>
+            {{ #price }}
+            <div class="row-wrapper" >
+              <div class="js-fittext" id="bigtext-2">
+                {{{ sale-type }}}
+              </div>
+              <div class="js-fittext" id="bigtext-3">
+                <h1><sup style="font-size: 0.6em; color: {{{account.colors.yellow}}}">$</sup>{{{ price }}}</h1>
+              </div>
+            </div>
+            {{ /price }}
+          </div>
+
+        </div>
+
+      </div><!--bleed-->
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}};
+
+      if (window.showCrop) {
+        document.body.classList.add("print")
+      } else {
+        document.body.classList.add("screen")
+      }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <script src="bigtext.js"></script>
+
+    <script>
+      function loop() {
+        $('#bigtext-1').bigtext({
+          childSelector: 'h1',
+        });
+
+        $('#bigtext-2').bigtext({
+          childSelector: 'h1',
+        });
+
+        $('#bigtext-3').bigtext({
+          childSelector: 'h1',
+        });   
+      } setInterval(loop, 500);
+    </script>
+
+    <script>
+      document.dispatchEvent(new Event('printready'))
+    </script>
+  </body>
+</html>
