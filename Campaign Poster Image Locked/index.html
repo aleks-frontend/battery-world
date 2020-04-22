@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A Frame - Dual Battery Fitting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <script src="prefixfree.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.0/dist/ResizeObserver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/javascript-debounce@1.0.0/dist/javascript-debounce.min.js"></script>  
+    
+    <style>
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Museo Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        color: white;
+      }
+
+      h1, h2, h3, h4, h5, h6 { font-weight: 900; }
+      h1 { 
+        /* font-size: 4em;  */
+        line-height: 1;
+        color: #fdb827; 
+      }
+
+      h2 { 
+        /* font-size: 4em;  */
+        line-height: 1;
+        color: #403393; 
+      }
+
+      .background {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+      }
+
+      .background-fit {
+        padding: 1em 1.09em;
+      }
+
+      .logo-frame {
+        height: 100%;
+        width: 100%;
+      }
+
+      .content-container {
+        position: absolute;
+        top: 4.56em;
+        left: 4.35em;
+        right: 4.35em;
+      }
+
+      .js-fittext { 
+        font-size: 10pt;
+        line-height: 0;
+        width: 100%; 
+      }
+
+      .js-fittext h1 {
+        display: inline-block;
+        line-height: 0.9;
+        white-space: nowrap;
+      }
+
+      .js-fittext h2 {
+        display: inline-block;
+        line-height: 0.9;
+      }
+      
+      .js-fittext h2 strong {
+        white-space: nowrap;
+        font-weight: 900;
+      }
+      
+      .spring-true .hour-logo {
+        display: block;
+      }
+
+      .spring-false .hour-logo {
+        display: none;
+      }
+      
+      .spring-true h2 {
+        color: {{{account.colors.yellow}}};
+      }
+      
+      .spring-true h1 {
+		color: white;
+      }
+      
+      .hour-logo {
+        position: absolute;
+        bottom: 3.66em;
+        right: 2.66em;
+      }
+
+      .hour-logo img {
+        width: 4.8em;
+        max-height: 4.8em;
+      }
+    </style>
+  </head>
+  <body class="spring-{{ is-spring }}" style="background: white;">
+    <div class="page">
+      <div class="bleed center-children">
+        
+        <div class="background background-fit" style="background-image: url('{{{ campaignImagery-background-image }}}')">
+          <img class="logo-frame" src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/61dedfa549b39c67d258d3eacb3e8b0f/logo_frame.svg">
+          <div class="content-container">
+            <div class="js-fittext">
+              <h1>{{{ subheading }}}</h1>
+            </div>
+            <div class="js-fittext">
+              <h2>{{{ headline }}}</h2>
+            </div>
+          </div>
+          <div class="hour-logo">
+            <img src="{{{account.logos.24-hour-primary}}}">
+          </div>
+        </div>
+        
+      </div><!--bleed-->
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}};
+
+      if (window.showCrop) {
+        document.body.classList.add("print")
+      } else {
+        document.body.classList.add("screen")
+      }
+    </script>
+        
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
