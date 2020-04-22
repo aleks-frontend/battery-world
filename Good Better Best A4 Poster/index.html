@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css');
+      @import ur('https://outfit-assets-production.s3.amazonaws.com/fonts/Museo/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Gotham/stylesheet.css');
+
+      :root {
+        --yellow: {{{account.colors.yellow}}};
+        --white: {{{account.colors.white}}};
+        --purple: {{{account.colors.purple}}};
+        --red: #e22028;
+        --green: #51B848;
+      }
+
+      html {
+        font-family: "Gotham";
+        font-size: 11pt;
+        color: var(--white);
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }    
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        background: var(--purple);
+      }
+
+      .topBackground {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 81%;
+        background-color: var(--yellow);
+      }
+
+      .body {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          margin: 1rem 1.07rem 1rem 1.05rem;
+          padding: 1.16rem 0.47rem 0rem 0.47rem;
+          border: 0.05rem solid var(--white);
+          border-radius: 1rem;
+          z-index: 0;
+          width: 85.5%;
+          height: 18.03em;
+          top: 0;
+      }
+
+      .logo__container {
+          position: absolute;
+          left: 6.59rem;
+          bottom: -0.3rem;
+          width: 4.29rem;
+          text-align: center;
+          font-size: 0;
+          background-color: var(--purple);
+      }
+
+      .logo {
+        width: 89.6%;
+        margin-left: 0.09rem;
+      }
+
+      .logo__leftSquare {
+          position: absolute;
+          top: 0.25rem;
+          left: -0.16rem;
+          width: 0.2rem;
+          height: 0.2rem;
+          background-color: var(--yellow);
+      }
+
+      .logo__leftSquare::before,
+      .logo__leftSquare::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--purple);
+      }
+
+      .logo__leftSquare::before {
+        width: 0.02rem;
+        height: 0.12rem;
+      }
+
+      .logo__leftSquare::after {
+        width: 0.12rem;
+        height: 0.02rem;
+      }
+
+      .logo__rightSquare {
+          position: absolute;
+          top: 0.25rem;
+          right: -0.17rem;
+          width: 0.2rem;
+          height: 0.2rem;
+          background-color: var(--white);
+      }
+
+      .logo__rightSquare::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          height: 0.02rem;
+          width: 0.12rem;
+          background-color: var(--purple);
+      }
+
+      .switch {
+        position: absolute;
+        top: -0.07rem;
+        left: 9rem;
+        width: 1.7rem;
+        height: 0.12rem;
+        background-color: var(--yellow);
+      }
+
+      .switch::before,
+      .switch::after {
+        content: '';
+        position: absolute;
+        width: 0.35rem;
+        height: 0.35rem;
+        border: 0.07rem solid var(--white);
+        border-radius: 50%;
+        top: -0.12rem;
+        background-color: var(--yellow)
+      }
+
+      .switch::before {
+        left: -0.3rem;
+      }
+
+      .switch::after {
+        left: 1.63rem;
+      }
+
+      .switch__line {
+          width: 1.75rem;
+          height: 0.05rem;
+          transform: rotate(-12.4deg);
+          transform-origin: 0rem 0rem;
+          background-color: var(--white);
+      }
+
+      .body__top {
+        min-height: 3.83rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+      
+      .products-container {
+         color: var(--purple);
+ 	  	 margin: 1.7rem 1.4rem 0;
+         display: flex;
+	     flex-direction: column;
+         height: 89.6%;
+         z-index: 2;
+	  }
+      
+      .product {
+        display: flex;
+        flex-direction: row;
+        height: 4.8rem;
+      }
+      
+      .product-left {
+          display: flex;
+          flex-direction: column;
+          width: 47%;
+          padding: 0 0.6rem 0 0.2rem;
+      }
+      
+          .product-image {
+              width: 3.2rem;
+              margin: 0.3em 24% 0 17%;
+          }
+      
+            .price {
+                font-family: 'Museo Sans';
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                font-size: 0.42em;
+            }
+      
+            .label {
+              text-align: left;
+              font-weight: 900;
+            }
+
+            .input {
+              text-align: left;
+            }
+
+      
+      .product-right {
+          display: flex;
+          flex-direction: column;
+          width: 6rem;
+          padding: 0.45rem 0 0.5rem 0.26rem;
+          height: 5rem;
+          justify-content: space-between;
+      }
+
+      .product-name {
+          font-family: 'Gotham';
+          font-weight: 900;
+          font-size: 0.556rem;
+          line-height: 0.55rem;
+	      text-transform: uppercase;
+      }
+      
+      .product-details {
+          display: flex;
+          flex-direction: column;
+          margin: 0.25rem 0 0.12rem 0;
+          max-height: 2.2em;
+          justify-content: space-between;
+      }
+		
+        .product-detail {
+          display: flex;
+          flex-direction: row;
+          height: 0.46rem;
+        }
+
+          .detail-icon {
+              width: 0.4rem;
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: 0.35rem;
+          }
+
+		      .warranty {
+                background-image: url('https://files.outfit.io/media_library_items/132679/warranty.svg');
+                background-size: 0.3rem;
+      		  }
+      
+		      .build-region {
+        		background-image: url('https://files.outfit.io/media_library_items/132681/build.svg');        
+		      }
+      
+              .maintenance {
+        		background-image: url('https://files.outfit.io/media_library_items/132683/maintenance.svg');        
+		      }
+
+              .suitability {
+        		background-image: url('https://files.outfit.io/media_library_items/132684/suitability.svg');        
+		      }
+      
+          .detail-text {
+              width: 0.5rem;
+              font-size: 0.22em;
+              flex: 1;
+              padding: 0.11rem 0.2rem;
+              font-weight: 600;
+          }
+
+        .performance-icon {
+            width: 1.23em;
+            background-repeat: no-repeat;
+            background-position: center right;
+            background-size: 58%;
+        }
+      
+        .standard-icon {
+			background-image: url('https://files.outfit.io/media_library_items/132678/standard_performance.svg');
+        }
+      
+      	.high-icon {
+          	background-image: url('https://files.outfit.io/media_library_items/132682/high_performance.svg');
+     	}
+      
+        .premium-icon {
+			background-image: url('https://files.outfit.io/media_library_items/132680/premium_performance.svg');
+        }
+      
+      .performance-rating {
+        display: flex;
+        flex-direction: row;
+        margin-top: 0.2rem
+      }
+      
+      .performance-detail {
+          font-size: 0.255rem;
+          text-align: center;
+          flex: 1;
+          line-height: 1.1em;
+          padding-left: 0.2rem;
+          font-weight: 500;
+      }
+      
+        .none .performance-detail-standard {display: none;}
+        .none .performance-detail-high {display: none;}
+	    .none .performance-detail-premium {display: none;}
+      
+        .standard .performance-detail-standard {display: flex;}
+        .standard .performance-detail-high {display: none;}
+	    .standard .performance-detail-premium {display: none;}
+
+        .high .performance-detail-standard {display: none;}
+        .high .performance-detail-high {display: flex;}
+        .high .performance-detail-premium {display: none;}
+
+       	.premium .performance-detail-standard {display: none;}
+       	.premium .performance-detail-high {display: none;}      
+       	.premium .performance-detail-premium {display: flex;}
+
+    .footer {
+      z-index: 2;
+      position: absolute;
+      bottom: 1.5em;
+      left: 1.7em;
+      height: 2em;
+	 }
+      
+        .footer-text-upper {
+            color: var(--yellow);
+            font-family: "Museo Sans";
+            font-weight: 900;
+            letter-spacing: -0.035rem;
+        }
+
+        .footer-text-lower {
+            color: #fff;
+            font-family: "Museo Sans";
+            font-size: 0.26em;
+            text-transform: uppercase;
+            margin-top: 0.19rem;
+        }
+
+      .terms-and-conditions {
+          font-size: 0.15em;
+          color: #fff;
+          position: absolute;
+          bottom: 2.6em;
+          left: 13em;
+          letter-spacing: -0.001rem;
+      }
+      
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  
+  <!---{{ placeholder-toggle-new }}--->
+  <!---{{ placeholder-opacity }}--->
+  <!---{{ placeholder-image-1 }}--->
+  <!---{{show-crop}}--->
+  <!---{{collection.product-list}}--->
+  <!---{{slogan-text}}--->
+  <!---{{{footer-text}}}--->
+  <!---{{{terms-and-conditions}}}--->
+  
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          
+          <div class="footer">
+            <div class="footer-text-upper">
+            	{{{slogan-text}}}
+            </div>
+            <div class="footer-text-lower">
+            	{{{footer-text}}}
+            </div>
+          </div>
+          
+          <div class="terms-and-conditions">
+          	{{{terms-and-conditions}}}
+          </div>
+
+          <div class="topBackground">
+			            
+            <div class="products-container">
+              
+              {{#collection.product-list}}
+              
+              	{{#block.product-listing}}
+                    <div class="product">
+                      <div class="product-left">
+                        <div class="product-image"><img src="{{{BW_product-image_gbb}}}"></div>
+                        <div class="price sale-price">
+                          {{#BW_sale-price_gbb}}
+                          <div class="label">Sale Price:</div>
+                              <div class="input">{{{BW_sale-price_gbb}}}</div>
+                          {{/BW_sale-price_gbb}}
+                        </div>
+                        <div class="price cost-pcm">
+                          {{#BW_cost-pcm_gbb}}
+                          <div class="label">Cost per month*</div>
+                                <div class="input">{{{BW_cost-pcm_gbb}}}</div>
+                          {{/BW_cost-pcm_gbb}}
+                        </div>
+                      </div>
+                      
+                      <div class="product-right">
+                        <div class="product-name">{{{BW-product-name-gbb}}}</div>
+
+
+                          <div class="product-details">
+	                      {{#collection.product-details}}
+                            
+                            {{#block.warranty}}
+                            <div class="product-detail">
+                              <div class="detail-icon warranty"></div>
+                              <div class="detail-text">{{{BW_warranty-text_gbb}}}</div>
+                            </div>
+                            {{/block.warranty}}
+
+                            {{#block.build-region}}                            
+                            <div class="product-detail">
+                              <div class="detail-icon build-region"></div>
+                              <div class="detail-text">{{{BW_build-text_gbb}}}</div>
+                            </div>
+                            {{/block.build-region}}                            
+
+                            {{#block.maintenance-design}}                                
+                            <div class="product-detail">
+                              <div class="detail-icon maintenance"></div>
+                              <div class="detail-text">{{{BW_maintenance-text_gbb}}}</div>
+                            </div>
+                            {{/block.maintenance-design}}
+  
+                            {{#block.car-suitability}}                             
+                            <div class="product-detail">
+                              <div class="detail-icon suitability"></div>
+                              <div class="detail-text">{{{BW_suitability-text_gbb}}}</div>
+                            </div>
+                            {{/block.car-suitability}}
+                            
+						  {{/collection.product-details}}
+                          </div>
+						
+                        
+                        <div class="performance-rating {{performance-grade}}{{^performance-grade}}none{{/performance-grade}}">
+                          <div class="performance-detail-standard">
+                            <div class="performance-icon standard-icon"></div>
+                            <div class="performance-detail standard-detail"><strong>Standard performance</strong><br> for passenger vehicles</div>
+                          </div>
+
+                          <div class="performance-detail-high">                    
+                            <div class="performance-icon high-icon"></div>
+                            <div class="performance-detail high-detail"><strong>High performance</strong><br> for passenger vehicles</div>
+                          </div>
+
+                          <div class="performance-detail-premium">                    
+                            <div class="performance-icon premium-icon"></div>
+                            <div class="performance-detail premium-detail"><strong>Premium performance</strong><br> for passenger vehicles</div>
+                          </div>
+                        </div>
+                        
+                    </div>
+                  </div>
+           		{{/block.product-listing}}
+
+              {{/collection.product-list}}
+              
+          </div><!--topBackground-->
+          <div class="body">
+            <div class="logo__container">
+              <img class="logo" src="{{{account.logos.primary}}}">
+              <div class="logo__leftSquare"></div><!--logo__leftSquare-->
+              <div class="logo__rightSquare"></div><!--logo__rightSquare-->
+            </div><!--logo__container-->
+            <div class="switch">
+              <div class="switch__line"></div><!--switch__line-->
+            </div><!--switch-->
+            
+          </div><!--body-->
+
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+        <script src="js/check-export-mode.js"></script>
+        <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+		if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();      
+
+    </script>
+
+
+  </body>
+</html>
