@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      :root {
+        --bgPurple : {{{account.colors.purple}}};
+        --bgYellow : {{{account.colors.yellow}}};
+        --borderWidth : 0.05em;
+      }
+      * {
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      body{
+        font-family: 'Museo Sans';
+      }
+      
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      
+      h1 {
+        text-align: center;
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.15em;
+        line-height: 0.9em;
+        margin-bottom: 0.5em;
+      }
+
+      .fit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .cover {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      
+      .page {
+        overflow: hidden;
+      }
+      
+      .test-background-image {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f326dcfa41850b3d8bf89f2c2a0515ae/a2_OpeningHours.jpg');
+        position: absolute; 
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-size: cover;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        opacity: 0.1;
+        z-index: 100;
+      }
+      
+      .overlay { mix-blend-mode: screen; }
+      
+      .logo { 
+        position: absolute; 
+        top: 0.5em; 
+        left: 0; 
+        right: 0; 
+		margin: 0 1.47em;
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--bgPurple);
+      }
+      .logo img { 
+        width: calc(100% - 1rem); /* 1rem is combined width of Plus and Minus boxes */
+        padding: 0 0.45em 0 0.65em;
+      }
+      
+      .container {
+        background-color: var(--bgPurple);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 1.25em 0.85em 0.9em;
+        overflow: hidden;
+      }
+      .plus,
+      .minus {
+        height: 0.5em;
+        width: 0.5em;
+        position: relative;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+      }
+      .plus {
+        margin-left: -0.02em;
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2ee7432835134a59b3cf0dc7895e65d8/plus.svg');
+      }
+      .minus {
+        margin-right: -0.02em;
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/56fcdaec07b4c55402a27534df0f7ec7/minus.svg');
+      }
+      .inner-container {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 1.66em 0.95em 1.1em;
+        border-radius: 0.6em;
+        border: 0.05em solid #FFFFFF;
+      }
+      .trading-hours h1 {
+        letter-spacing: 2px;
+      }
+      .trading-hours-table .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 0.45em;
+      }
+      
+      .trading-hours-table .row h3, .hours-col {
+        color: white;
+        font-size: 0.65em;
+        font-weight: 700;
+        line-height: 1em;
+      }
+      .trading-hours {
+        margin: 0 0 1.23em;
+      }
+      .trading-hours-table {
+        margin: 0 0.28em;
+      }
+      .footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0 0 0 0.26em;
+        /*letter-spacing: 8px;*/
+      }
+      
+      .footer .left-col {
+        width: 50%;
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+      
+      .footer .right-col {
+        width: 40%;
+        transform: translate(-0.25em, -0.4em);
+      }
+      .right-col img {
+        width: 100%;
+        display: block;
+        margin: 0 0 0.3em;
+      }
+      .bigTextWrapper {
+        height: 0.8em;
+        padding: 0 0 0 0.7em;
+        position: relative;
+      }
+      .bigtext {
+        width: 390px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .bigTextWrapper:before {
+        content: '';
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/c39341faf280e1c7e70a2f01a10df73e/phone_call.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 0.55em;
+        height: 0.55em;
+        position: absolute;
+        left: 0;
+        top: 0.1em;
+      }
+      
+      .right-col span {
+        line-height: 1.2em;
+        color: white;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+      
+      .footer h2 {
+        color: white;
+        font-weight: 900;
+        font-size: 1.1em;
+        line-height: 0.9em;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+      }
+      
+      .footer h2 span {
+        color: #fdb525;
+      }
+      
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      
+      @media (max-width:225mm) {
+        .bigTextWrapper:before {
+          width: 0.4em;
+          height: 0.4em;
+          top: 0.2em;
+        }
+        .bigTextWrapper {
+          padding: 0 0 0 0.6em;
+        }
+        .bigtext {
+          width: 196px;
+        }
+      }
+    </style>
+  </head>
+  <body style="background: white">
+    
+    <div class="page">
+      <div class="bleed center-children">
+        <!--<div class="test-background-image"></div>-->
+        
+        <div class="container">
+          <div class="logo">
+            <div class="plus">
+            </div>
+            <img src="{{{account.logos.primary}}}">
+            <div class="minus">
+            </div>
+          </div>
+          
+          <div class="inner-container">
+            <div class="trading-hours">
+              <h1>Trading Hours</h1>
+              
+              <div class="trading-hours-table">
+                <div class="row">
+                  <div class="col"><h3>Monday</h3></div>
+                  <div class="col hours-col">{{{team.monday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Tuesday</h3></div>
+                  <div class="col hours-col">{{{team.tuesday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Wednesday</h3></div>
+                  <div class="col hours-col">{{{team.wednesday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Thursday</h3></div>
+                  <div class="col hours-col">{{{team.thursday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Friday</h3></div>
+                  <div class="col hours-col">{{{team.friday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Saturday</h3></div>
+                  <div class="col hours-col">{{{team.saturday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Sunday</h3></div>
+                  <div class="col hours-col">{{{team.sunday-opening-hours}}}</div>
+                </div>
+              </div>
+            </div><!--trading-hours-->
+            
+            <div class="footer">
+              <div class="left-col">
+                <h2>Did you know? <span>We can come<br>to you.</span></h2>
+              </div>
+              
+              <div class="right-col contact {{{ phone-number-type }}}-number">
+                <img class="24-hours" src="{{{account.logos.24-hour-primary}}}"/>
+                <div class="bigTextWrapper">
+                  <div id="bigtext">
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </div><!--footer-->
+          </div><!--inner-container-->
+          
+        </div><!--container--> 
+      </div><!--bleed-->
+    </div><!--page-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="bigtext.js"></script>
+  <script>
+    window.showCrop = {{show-crop}};
+    
+    if (window.showCrop) {
+      document.body.classList.add("print")
+    } else {
+      document.body.classList.add("screen")
+    }
+    
+    if ($('.contact').hasClass('national-number')) {
+      $('#bigtext span').text('13 17 60')
+    } else {
+      $('#bigtext span').text('{{team.phone}}')
+    }
+       function loop() {
+         checkHeight(document.getElementsByClassName('headline-overflow'));
+         $('#bigtext').bigtext();
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+  </script>
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+  </body>
+</html>
