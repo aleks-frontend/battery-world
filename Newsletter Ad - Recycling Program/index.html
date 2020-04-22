@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html data-sign="OSZ">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Gotham/stylesheet.css');
+
+      :root {
+        --yellow: {{{account.colors.yellow}}};
+        --white: {{{account.colors.white}}};
+        --purple: {{{account.colors.purple}}};
+        --black: {{{account.colors.black}}};
+      }
+
+      * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+      html {
+        font-family: "Museo Sans";
+        font-size: 11pt;
+        color: var(--white);
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .container {
+        display: flex;
+        height: 100%;
+        background: var(--purple);
+      }
+
+      .side {
+        min-width: 8.3rem;
+      }
+
+      .hero {
+        position: absolute;
+        bottom: 0.9rem;
+        height: 11.6rem;
+        left: 0.74rem;
+        object-position: top center;
+      }
+
+      .speechBubble  {
+        position: absolute;
+        background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='565.355px' height='275.862px' viewBox='0 0 386.355 175.862' enable-background='new 0 0 386.355 175.862' xml:space='preserve'%3E%3Cpath fill='%23fff' stroke='%23070606' stroke-width='5.327' stroke-linejoin='round' stroke-miterlimit='10' d='M226.894,2.664 c-86.598,0-156.799,38.176-156.799,85.268c0,6.141,1.205,12.127,3.473,17.9c-17.978,21.104-70.904,31.773-70.904,31.773 c59.057,0,79.329-5.504,86.274-9.115c26.527,26.627,78.357,44.709,137.956,44.709c86.598,0,156.799-38.177,156.799-85.268 C383.692,40.84,313.491,2.664,226.894,2.664z'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 6.2rem;
+        height: 3rem;
+        left: 4.9rem;
+        top: 1.61rem;
+        color: var(--black);
+      }
+
+      .speechBubble p {
+        position: absolute;
+        text-align: center;
+        font-weight: 900;
+        font-size: 0.31rem;
+        right: 0.4rem;
+        top: 0.92rem;
+        word-spacing: 0;
+        letter-spacing: -0.5px;
+        line-height: 1.2
+      }
+
+      .main {
+        padding-top: 2.04rem;
+      }
+
+      .header {
+        word-break: break-all;
+        text-align: center;  
+        padding-left: 3.32rem;
+        padding-right: 1.6rem;
+        margin-bottom: 0.84rem;
+      }
+
+
+      .logo {
+        width: 8.47rem;
+        padding-bottom: 0.16rem;
+        padding-right: 0.08rem;
+      }
+
+      .heading {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.53rem;
+        word-spacing: 0px;
+        letter-spacing: 0.4px;
+      }
+
+      .heading strong {
+        color: var(--yellow);
+      }
+
+      .content {
+        font-size: 0.486rem;
+        font-weight: 300;
+        width: 12.7rem;
+        margin: 0rem 1.6rem 0rem 0rem;
+      }
+
+      .content p {
+        margin-bottom: 0.6rem;
+      }
+
+      .content p:last-child {
+        margin-bottom: 0rem;
+      }
+      
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="side">
+            {{#BW_image--narp}}
+            <img class="hero" src="{{BW_image--narp}}">
+            {{/BW_image--narp}}
+            <div class="speechBubble">
+              <p>KIDS,<br>PLEASE ONLY SMALL BATTERIES,<br>AAs, AAAs, 9v etc.</p>
+            </div><!-- speechBublle -->
+          </div> <!--side-->
+
+          <div class="main">
+            <div class="header">
+              <img class="logo" src="{{{account.logos.white-label}}}">
+              <div class="heading" data-max-line="2">
+                {{{ BW_heading--narp }}}
+              </div> <!--heading-->
+            </div> <!--header-->
+            <div class="content" data-max-height="245">{{{ BW_body-text--narp }}}</div> 		
+          </div> <!--main-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+        if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();      
+
+    </script>
+
+
+  </body>
+</html>
