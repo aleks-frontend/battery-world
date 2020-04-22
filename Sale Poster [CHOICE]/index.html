@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html async>
+  <head>
+    <title>Store Poster</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.0/dist/ResizeObserver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/javascript-debounce@1.0.0/dist/javascript-debounce.min.js"></script>  
+    <style>
+
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Museo Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+
+      body {
+        color: white;
+      }
+
+      h1 { font-size: 2em; }
+      .content-container .js-fittext h1:last-of-type { color: {{{account.colors.yellow}}}; }
+
+      h1, h2, h3, h4, h5, h6 { font-weight: 900; }
+      h1, h2 { 
+        /* font-size: 4em;  */
+        line-height: 1;
+      }
+
+      h3 { 
+        /* font-size: 4em;  */
+        line-height: 1;
+        color: #fdb913; 
+      }
+
+      .background {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+      }
+
+      .background-fit {
+        padding: 1.9em 1em 0.87em;
+      }
+      
+      .product-artwork {
+        position: absolute;
+        top: 0.75em;
+        left: 1.6em;
+        right: 1.2em;
+        height: 15em;
+      }
+      
+      .product-artwork img { width: 100%; }
+
+      .logo-frame {
+        padding: 5em 0 0 0;
+        width: 100%;
+      }
+
+      .content-container {
+        position: absolute;
+        top: 9em;
+        left: 2.26em;
+        right: 2.26em;
+      }
+
+      .js-fittext { 
+        font-size: 20pt;
+        line-height: 0;
+        width: 100%; 
+      }
+
+      .js-fittext h1, .js-fittext h2, .js-fittext h3 {
+        display: inline-block;
+        line-height: 0.9;
+        white-space: nowrap;
+      }
+
+      .auto .product-artwork {
+        top: 2em;
+        right: 1.6em;
+      } 
+      
+      .moto .product-artwork {
+        left: 1.35em;
+        right: 1.4em;
+      }
+      
+      .boat .product-artwork {
+        top: 4em;
+        left: 0.5em;
+        right: 0.6em;
+      }      
+      
+    </style>
+  </head>
+  <body class="{{product-category}}">
+    <div class="page">
+
+      <div class="background background-fit" style="background-color: {{{account.colors.purple}}};">
+        <div class="product-artwork"><img src="{{{ product-artwork }}}"></div>
+        <img class="logo-frame" src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/830ce6b1499735340c7b95c89fc44638/logo_frame.svg">
+        <div class="content-container">
+          <div style="max-height: 9.3em;">
+            <div class="js-fittext check-overflow">
+              <h1>{{{ text-one }}}</h1>
+              <h1>{{{ text-two }}}</h1>
+              <h1>{{{ text-three }}}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>
+      window.showCrop = {{show-crop}};
+
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+      
+      var image = document.querySelector(".product-artwork img");
+      
+        if (document.body.classList.contains('auto')) {
+        image.src = "https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3160ec1e92112f20c624599eee5c309f/auto.svg";
+      } else if (document.body.classList.contains('moto')) {
+        image.src = "https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2df1988a7d5ab1d8f69540990e6dbc43/moto.svg";
+      } else if (document.body.classList.contains('camp')) {
+        image.src ="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/7983774d347b0cf1f95be400b399fb45/camp.svg";
+      } else if (document.body.classList.contains('boat')) {        
+        image.src = "https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/49a6e90a616f4cc4a1faa140cf43f241/boat.svg";
+      }
+    </script>
+    <script src="main.js"></script>
+
+  </body>
+</html>
