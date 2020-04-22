@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Circular/stylesheet.css');
+      
+       html, body {
+        /* font-size: 10px !important; */
+         color: orange;
+      }
+
+      /* font-size: 57.052 */
+      
+      body{
+        font-family: 'Museo Sans';
+      }
+      
+      .overflow {
+        border: 3px dashed red;
+        position: relative; }
+      .overflow h1,
+      .overflow h2,
+      .overflow h3,
+      .overflow h4,
+      .overflow h5,
+      .overflow h6,
+      .overflow p,
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: ‘+’;
+        position: absolute;
+        z-index: 5;
+        top: 5x;   
+        right: 5px;   
+        height: 55px;   
+        width: 55px;    
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 40px;   
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: ‘There is overset content in this column. Please remove it’;
+        position: absolute;
+        top: 65px;  
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 40px;   
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      
+      .placeholder {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-image: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/51664c0dd4aceb88ce82c8287e47bbbc/placeholder.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0;
+      }   
+      
+      @media (orientation: landscape) {
+        .placeholder {
+          background-image: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/a27576450325e605d7e6c2ecd7cfe275/BW%200741_1_A1_L_594x841mm%20%5BP%5D.png");                  
+        }
+      }
+
+      .container {
+        background-color: #413394;
+        padding: 1.090rem 0.750rem 1.209rem;
+      }
+      
+      .wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        padding: 0.753rem 0.788rem;
+        border: 0.049rem solid white;
+        border-radius: 0.592rem;
+        font-size: 1.630rem;
+        font-weight: 900;
+        letter-spacing: -0.0525rem;
+        text-transform: uppercase;
+      }
+      
+      .top{
+        margin-top: -3.1953rem;
+      }
+    
+      .truck {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 0;
+        top: 1.291rem;    
+        margin-top: 2.208rem;
+        width: 100%;
+        height: 3.645rem;
+      }
+
+      .truck__image {
+        position: absolute;
+        width: 64.3%;
+        height: auto;
+        left: 1.018rem;
+      }
+
+      .truck::before,
+      .truck::after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 0.029rem;
+        top: 2.557rem;
+        background-color: white;
+      }
+
+      .truck::before {
+        width: 8.1%;
+        left: 0;
+      }
+      .truck::after {
+        width: 27.8%;
+        right: 0;
+      }
+
+      .middle {
+        padding-left: 0.227rem;
+        margin-top: 2.208rem;
+      }
+
+      .mobile {
+        position: absolute;
+        right: 0.96rem;
+        top: 8.42rem;
+        height: 21%;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+      
+      .mobile__image {
+        max-width: none;
+        width: 157.5%;
+        right: 7.8%;
+        position: absolute;
+      }
+
+      .bottom {
+        padding-left: 0.386rem;
+        font-size: 1.367rem;
+      }
+
+      .bottom__top {
+        line-height: 1;
+        margin-bottom: 0.245rem;
+        letter-spacing: -0.077rem;
+      }
+
+      .bottom__bottom {
+        font-size: 0.501rem;
+        padding-left: 0.122rem;
+        font-weight: 300;
+        letter-spacing: -0.017rem;
+        margin-bottom: 0.14rem;
+        word-spacing: 0.035rem;
+        color: white;
+      }
+
+      .openBorder {
+        position: absolute;
+        top: 0rem;
+        right: 0.84rem;
+        height: 0.876rem;
+        width: 2.261rem;
+        background-color: #413394;
+        transform: translateY(-50%);
+      }
+
+      .openBorder__line {
+        position: absolute;
+        height: 0.049rem;
+        top: 41.7%;
+        left: 0.333rem;
+        right: 0.192rem;
+        background-color: white;
+        transform-origin: left;
+        transform: rotate(-12deg);
+      }
+
+      .openBorder::before,
+      .openBorder::after {
+        content: '';
+        display: block;
+        border: 0.049rem solid white;
+        width: 0.333rem;
+        height: 0.333rem;
+        position: absolute;
+        border-radius: 50%;
+        top: 0.245rem;
+      }
+          
+      .openBorder::after {
+        right: 0;
+      }
+
+      .logo {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 6.203rem;
+        height: 0.946rem;
+        bottom: -0.49rem;
+        right: 0.538rem;
+        background-color: #413394;
+      }
+
+      .main {
+        width: 82.4%;
+        transform: translateX(0.0666rem)
+      }
+      
+
+      .plus {
+        display: inline-block;
+        position: absolute;
+        width: 0.315rem;
+        left: -0.032rem;
+        top: 0.333rem;
+      }
+
+      .minus {
+        display: inline-block;
+        position: absolute;
+        top: 0.333rem;
+        right: -0.016rem;
+        width: 0.315rem;
+      }      
+      
+      /* Because media query for 'orientation: landscape' is not working, we had to add a small hack.
+         Helper input 'Landscape' is now added and it will be set to True for all the landscape variations and locked.
+      */
+      .u-landscape .wrapper {
+        border: none;
+      }
+      
+      .u-landscape .picture {
+        position: absolute;
+        left: 0.153rem;
+        top: -0.4238rem;
+        height: 106%;
+        width: 98.8%;
+        background-image: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/de85e76bd510f476d56b6172fdd0b0b6/frame.svg");
+        background-repeat: no-repeat;
+        z-index: 2;
+      }
+
+      .u-landscape .logo {
+        display: none;
+      }
+
+      .u-landscape .top {
+        margin-top: 0.436rem;
+        font-size: 1.1869rem;
+        margin-left: 2.102rem;
+      }
+
+      .u-landscape .truck{
+        top: 0.691rem;
+      }
+
+      .u-landscape .truck__image {
+        width: 35.9%;
+        left: 2.918rem;
+      }
+
+      .u-landscape .truck::before, 
+      .u-landscape .truck::after {
+        top: 2.53rem;
+      }
+
+      .u-landscape .truck::before {
+        width: 13.3%;
+        left: 0.1699rem;
+      }
+
+      .u-landscape .truck::after {
+        width: 50.2%;
+        right: 0.14rem;
+      }
+
+      .u-landscape .mobile {
+        position: absolute;
+        right: 1.16rem;
+        top: 6.12rem;
+        height: 28%;
+        width: 97.4%;
+      }
+
+      .u-landscape .mobile__image {
+        width: 91.4%;
+        right: 7.8%;
+      }
+
+      .u-landscape .middle{
+        padding-left: 10.127rem;
+        margin-top: 4.508rem;
+        font-size: 1.25rem;
+      }
+
+      .u-landscape .break{
+        display: none;
+      }
+
+      .u-landscape .bottom{
+        margin-bottom: 0.5258rem;
+      }
+
+      .u-landscape .bottom__top {
+        letter-spacing: -0.08rem;
+        margin-left: 2.2rem;
+        margin-top: 2.2rem;
+        margin-bottom: 0.045rem;
+      }
+
+      .u-landscape .bottom__bottom {
+        margin-bottom: 0.9258rem;
+        padding-left: 5.274rem;
+        font-size: 0.574rem;
+        letter-spacing: -0.05258rem;
+      }      
+      
+      /* Helpper classes */
+      .u-portrait-block {
+        display: block;
+      }
+      
+      @media screen and (orientation: landscape) {
+        .u-portrait-block {
+          display: inline;
+        }
+      }
+      
+      .u-landscape .u-portrait-block {
+        display: inline;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="{{ BWC_landscape }}">    
+
+    <div class="page">
+
+      <div class="bleed center-children">
+
+        <div class="placeholder"></div>
+
+        <div class="container fit">
+
+          <div class="wrapper"> 
+            <div class="picture">
+            </div>
+            <div class="openBorder">
+              <div class="openBorder__line"></div> <!--openBorder__line-->
+             </div> <!--openBorder-->
+            <div class="top">
+              from big.
+            </div><!--top-->
+            <div class="truck">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/915c8cf4dc2638457cd35ef29bca1823/truck.svg" class="truck__image">
+            </div><!--truck-->
+            <div class="middle">
+              to small.
+            </div><!--middle-->
+            <div class="mobile">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/10c25eb47025942646209acbd70bc344/mobile_final3.svg" class="mobile__image" />
+            </div><!--mobile-->
+            <div class="bottom">
+              <div class="bottom__top">
+                <span class="u-portrait-block">we have</span>
+                you covered.
+              </div><!--bottom__top-->
+              <div class="bottom__bottom">
+                ask your batteryologist for more        
+              </div><!--bottom__bottom-->
+            </div><!--bottom-->
+            <div class="logo">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/201af7d9ecf3672513835f589a5c1fe8/plus.svg" class="plus">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f3e7baf12c9a121e2882b115eb13ff29/Group%2012.svg" class="main">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/99a9a1e42168623b5cf0ce7d49b225cd/minus.svg" class="minus">
+            </div> <!--logo-->  
+          </div><!-- wrapper -->
+    
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    
+
+   <script>
+    window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+
+    if (window.showCrop) {
+        document.querySelector('body').classList.add('show-crop');
+    } else {
+        document.querySelector('body').classList.add('hide-crop');
+    }                                               
+  </script>
+  
+  <script src="main.js"></script>   
+  <script src="prefixfree.js"></script>
+
+    <script>
+      
+       // Check Overflow function
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          console.log(parentHeight);
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }   
+      
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+      } setInterval(loop, 1000);  
+      
+      // Fix for the resizable background images - fullscreen and digital vairaitons only
+      function checkCrop() {
+        if ({{show-crop}} === true) {
+        } else {
+          [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+            el.parentNode.style.left = '0';
+            el.parentNode.style.right = '0';
+            el.parentNode.style.top = '0';
+            el.parentNode.style.bottom = '0';
+            el.parentNode.style.width = '100%';
+            el.parentNode.style.height = '100%';
+          });
+        }
+      }
+      checkCrop();      
+     
+    </script>
+
+
+  </body>
+</html>
