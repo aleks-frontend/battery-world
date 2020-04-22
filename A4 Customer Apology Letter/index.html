@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #ffffff;">
+
+<head>
+  <link type="text/css" rel="stylesheet" href="main.css" />
+  <style type="text/css"></style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="bleed">
+      <div class="wrapper fit">
+        <p>{{{team.name}}}</p>
+        {{#team.address}}<p>{{{team.address}}}</p>{{/team.address}}
+        <p>&nbsp;</p>
+        <p class="today"></p>
+        <p>&nbsp;</p>
+        <p>Dear {{{first-name}}},</p>
+        <p>I am truly sorry about the problem you had with {{{product-name}}}, on {{{date-of-visit}}}.</p>        
+        <p>As the local owner of the business, nothing is as important to me as a happy customer and I pride myself on quality products and service. This really got my attention. I will review our processes to ensure this doesn’t happen again.</p>
+        <p>More importantly, I’d love to see you back in my store. Please accept this letter as a $20 voucher for your next visit.</p>
+        <p>Thank you again for bringing this to my attention, and please accept my apologies.</p>
+        <p>&nbsp;</p>
+        <p>Sincerely,</p>
+        <p class="sr-only">please sign in blue pen</p>
+        <p>&nbsp;</p>
+        {{#team.first-name}}{{#team.last-name}}
+        <p>{{{team.first-name}}} {{{team.last-name}}}</p>
+        {{/team.last-name}}{{/team.first-name}}
+        <p>The local owner of Battery World {{{team.name}}}</p>
+      </div>      
+    </div>
+  </div>
+  <script src="dateFormat.js"></script>
+  <script>
+    const showCrop = '{{show-crop}}' === 'true';
+
+    function cropMarks(showCrop) {
+      if (showCrop) {
+        document.querySelector('body').classList.add('crop');
+      }
+      
+      Array.prototype.slice.call(document.querySelectorAll('.page')).forEach(function (page) {
+        const parser = new DOMParser();
+        const cropString = '<div class="crop-marks"><span class="cm1"></span><span class="cm2"></span><span class="cm3"></span><span class="cm4"></span></div>';
+        const cropNode = parser.parseFromString(cropString, "text/html").body.firstChild;
+        !!showCrop && page.insertBefore(cropNode, null);
+      });
+    }
+    
+    cropMarks(showCrop);
+    document.querySelector('.today').innerHTML = dateFormat(new Date(), 'l, j F Y');
+  </script>
+</body>
+
+</html>
