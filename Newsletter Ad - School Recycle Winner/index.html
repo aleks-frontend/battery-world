@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Gotham/stylesheet.css');
+
+      :root {
+        --yellow: {{{account.colors.yellow}}};
+        --white: {{{account.colors.white}}};
+        --purple: {{{account.colors.purple}}};
+      }
+
+      html {
+        font-family: "Gotham";
+        font-size: 11pt;
+        color: var(--white);
+      }
+
+      strong {
+        color: var(--yellow);
+      }   
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }    
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        background: var(--purple);
+      }
+
+      .logo__container {
+        position: absolute;
+        left: 43pt;
+        top: -19pt;
+        width: 240.1pt;
+        text-align: center;
+        font-size: 0;
+        background-color: var(--purple);
+      }
+
+      .logo {
+        width: 89.6%;
+        margin-left: 5pt;
+      }
+
+      .logo__square {
+        position: absolute;
+        top: 12pt;
+        width: 11.4pt;
+        height: 11.4pt;
+      }
+
+      .logo__square--left {
+        left: -11.4pt;
+        background-color: var(--yellow);
+      }
+
+      .logo__square--left::before,
+      .logo__square--left::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--purple);
+      }
+
+      .logo__square--left::before {
+        width: 6pt;
+        height: 1.2pt;
+      }
+
+      .logo__square--left::after {
+        width: 1.8pt;
+        height: 6pt;
+      }
+
+      .logo__square--right {
+        right: -10.6pt;
+        background-color: var(--white);
+      }
+
+      .logo__square--right::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 1.5pt;
+        width: 6.1pt;
+        background-color: var(--purple);
+      }
+
+      .switch {
+        position: absolute;
+        bottom: -2.3pt;
+        right: 84pt;
+        width: 48pt;
+        height: 3pt;
+        background-color: var(--purple);
+      }
+
+      .switch::before,
+      .switch::after {
+        content: '';
+        position: absolute;
+        width: 9pt;
+        height: 9pt;
+        border: 1.3pt solid var(--white);
+        border-radius: 50%;
+        top: -2.7pt;
+        background-color: var(--yellow);
+      }
+
+      .switch::before {
+        left: -8.5pt;
+      }
+
+      .switch::after {
+        left: 46.6pt;
+      }
+
+      .switch__line {
+        width: 51pt;
+        height: 1.8pt;
+        transform: rotate(-14.7deg);
+        transform-origin: 58.4pt 14pt;
+        background-color: var(--white);
+      }
+
+      .body {
+        position: relative;
+        display: flex;
+        flex: 1;
+        margin: 43pt 44pt 44pt 44.1pt;
+        padding: 38pt 16pt 0pt 27pt;
+        border: 2pt solid var(--white);
+        border-radius: 25pt;
+        word-break: break-word;
+      }
+
+      .side {
+        width: 305pt;
+        padding-bottom: 28pt;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        width: 96%; 
+        height: 100%;
+      }
+
+      .main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: space-between;
+        padding-bottom: 7.9pt;
+        font-size: 0;
+      }
+
+      .main__top {
+        max-width: 317pt;
+      }
+
+      .heading {
+        font-weight: 700;
+        font-size: 29.8pt;
+        text-transform: uppercase;
+      }
+
+      .heading--secondary {
+        font-size: 39.3pt;
+        line-height: 1.1em;
+      }
+
+      .subheading {
+        padding-left: 3pt;
+        font-size: 17.1pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 1em;
+      }
+
+      .subheading--secondary {
+        margin: 0 13.7pt;
+        padding: 0;
+        font-size: 19.9pt;
+        line-height: 1.2em;
+      }
+
+      .recycle {
+        display: flex;
+        align-items: center;
+        margin-top: 9.4pt;
+        padding-left: 41pt;
+      }
+
+      .recycle__icon {
+        min-width: 74pt;
+        min-height: 72pt;
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      .main__bottom {
+        width: 317pt;
+        text-align: center;
+      }
+
+      .phone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 89pt;
+      }
+
+      .info--phone {
+        position: relative;
+        display: flex;
+        width: 100%;
+        font-family: 'Gotham';
+        font-size: 28.6pt;
+        font-weight: 700;
+        letter-spacing: -1pt;
+      }
+
+      .phone__icon {
+        height: 22pt;
+        width: 22pt;
+        margin-right: 5pt;
+        margin-top: 4pt;
+        background-image: url(https://files.outfit.io/media_library_items/85310/Phone.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      .phone__number {
+        display: inline-block;
+        position: relative;
+        width: 63%;
+        display: none;
+      }
+
+      .phone--number-13 .phone__number--13 {
+        display: flex;
+      }
+
+      .phone--branch-number .phone__number--branch {
+        display: flex;
+      }
+
+      .address {
+        padding-top: 4.4pt;
+        font-size: 10.2pt;
+        text-align: center;
+        font-weight: 500;
+        letter-spacing: 0.1pt;
+      }
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="body">
+            <div class="logo__container">
+              <img class="logo" src="{{{account.logos.primary}}}">
+              <div class="logo__square logo__square--left"></div><!--logo__leftSquare-->
+              <div class="logo__square logo__square--right"></div><!--logo__rightSquare-->
+            </div><!--logo__container-->
+            <div class="switch">
+              <div class="switch__line"></div><!--switch__line-->
+            </div><!--switch-->
+            <div class="side">
+              <div class="hero"><div class="reposition-fix">{{{BW_hero-image--srw}}}</div><!--reposition-fix--></div><!--hero-->
+            </div><!--side-->
+            <div class="main">
+              <div class="main__top">
+                <div class="heading textFit" data-max-line="1">{{{BW_first-heading-text--nasrw}}}</div><!--heading-->
+                <div class="subheading textFit" data-max-line="1">{{{BW_first-subheading-text--nasrw}}}</div><!--subheading-->
+                <div class="recycle">
+                  {{#BW_icon--nasrw}}
+                  <div class="recycle__icon" style="background-image: url({{{BW_icon--nasrw}}})"></div><!--recycle__icon-->
+                  {{/BW_icon--nasrw}}
+                  <div class="recycle__text">
+                    <div class="subheading subheading--secondary" data-max-line="3">{{{BW_second-subheading--nasrw}}}</div><!--subheading-->
+                  </div><!--recycle__text-->
+                </div><!--recyce-->
+                <div class="heading heading--secondary textFit" data-max-line="1">{{{BW_second-heading--nasrw}}}</div><!--heading-->
+              </div><!--main__top-->
+              <div class="main__bottom">
+                <div class="phone">
+                  <img class="phone__icon" src="https://files.outfit.io/media_library_items/85310/Phone.svg"><!--phone__icon-->
+                  <div class="info info--phone phone--{{{BW_phone-number--nasrw}}}">
+                    <div class="phone__number phone__number--13">
+                      <span class="textFit">13 17 60</span><!--textFit-->
+                    </div><!--phone__number-->
+                    <div class="phone__number phone__number--branch">
+                      <span class="textFit">{{{team.phone}}}</span><!--textFit-->
+                    </div><!--phone__number-->
+                  </div><!--phone-->
+                </div><!--phone-->
+                <div class="address textFit">{{{team.address}}}{{^team.address}}Battery World Townsville 245 Ingham Rd Garbutt{{/team.address}}</div><!--address-->
+              </div><!--main__bottom-->
+            </div><!--main-->
+          </div><!--body-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+      
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+		if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();      
+
+    </script>
+
+
+  </body>
+</html>
