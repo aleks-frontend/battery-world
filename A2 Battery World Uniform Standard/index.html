@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html color-primary="{{account.colors.primary}}" logo-primary="{{account.logos.primary}}">
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesh  eet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    >
+    </script>
+    <script src="main.js"></script>
+    <script src="lu-helper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
+
+    <style>
+      .placeholder {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-image: url('placeholder.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0.7;
+        display: none;
+      }
+
+      .placeholder {
+        /*display: block;*/
+      }
+
+      .headline-overflow {
+        max-height: 40pt;
+      }
+
+      .bg-primary {
+        background-color: {{{account.colors.primary}}} !important;
+      }
+
+      .fg-primary {
+        color: {{{account.colors.primary}}} !important;
+      }
+
+      .logo-primary {
+        background-image: url("{{{account.logos.primary}}}") !important;
+      }
+
+      [color-reversed] {
+        color: white !important;
+      }
+
+      [logo-reversed] {
+        background-image: url("{{{account.logos.reversed}}}") !important;
+      }
+
+      .bg-purple {
+        background-color: var(--purple);
+      }
+
+      .fg-purple {
+        color: var(--purple);
+      }
+
+      .bg-yellow {
+        background-color: var(--yellow);
+      }
+
+      .fg-yellow {
+        color: var(--yellow);
+      }
+
+      .product-features ul li:before {
+        background-color: var(--purple);
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="bleed center-children">
+        <div class="placeholder"></div>
+        <div class="container">
+          <div class="condition">*Attire must be battery world approved at all times</div>
+          <div class="code">11102018</div>
+          <div class="border"></div>
+          <div class="title">uniform standard</div>
+          <div class="inner">
+            <div class="left">
+              <div class="row-1">
+                <header>The importance of a corporate uniform standard</header>
+                <ul>
+                  <li>Creates an atmosphere of belonging</li>
+                  <li>Creates the impression of expertise giving the customer conﬁdence</li>
+                  <li>Demonstrates professionalism and reinforces we are the Batteryologists</li>
+                  <li>Corporate uniforms enhance the brand</li>
+                </ul>
+              </div>
+              <div class="row-2">
+                <header>Is your uniform like this today?</header>
+                <div class="content">
+                  <p>Soft drape blouse, polo or the checked corporate shirt are the options. Clean ironed with no fading, or visible acid spills.</p>
+                  <p>Corporate black trousers or corporate black cargo shorts, neatly ironed, not fading and no visible acid spills</p>
+                  <p>Clean shaven or neatly trimmed with no excessive growth around throat and neck areas.</p>
+                  <p>Corporate black slacks or corporate skirt with black, closed in shoes.</p>
+                  <p>Black steel cap boots required at all times. (Non sales team members black closed in shoes)</p>
+                  <p>Hair nicely groomed, clean and well kept.</p>
+                </div>
+              </div>
+              <div class="row-3">
+                <div class="do-the-25"></div>
+                <div class="text-1">Battery World uniform standards 2018</div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="uniform-wrapper">
+                <img class="photo" src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/99b068d44986904af5db6ade075a9a60/Image%203.png" style="top: 0.6rem;left: 0.1rem;width: 1.9rem;">
+                <div class="details">
+                  <div class="item" style="margin-top: 0.45rem;">
+                    <div class="indicator" style="width: 1.35rem"></div>
+                    <header>Hair &amp; face</header>
+                    <ul>
+                      <li>Clean and groomed</li>
+                      <li>Clean shaved.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 0.55rem;">
+                    <div class="indicator" style="width: 0.68rem;"></div>
+                    <header>Shirt</header>
+                    <ul>
+                      <li>Battery World Corporate</li>
+                      <li>Clean, ironed</li>
+                      <li>No spills or faded colours.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 0.91rem;">
+                    <div class="indicator" style="width: 0.95rem;"></div>
+                    <header>Pants</header>
+                    <ul>
+                      <li>Black trousers</li>
+                      <li>Clean, ironed</li>
+                      <li>No spills or faded colours.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 1.44rem;">
+                    <div class="indicator" style="width: 0.75rem;"></div>
+                    <header>Shoes</header>
+                    <ul>
+                      <li>Black closed in shoes.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="uniform-wrapper">
+                <img class="photo" src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/065e066597058dc86e93ccc94a469a64/Image%204.png" style="top: 0.6rem;left: 0.15rem;width: 1.8rem;">
+                <div class="details">
+                  <div class="item" style="margin-top: 0.69rem;">
+                    <div class="indicator" style="width: 1.22rem;"></div>
+                    <header>Hair &amp; face</header>
+                    <ul>
+                      <li>Clean and groomed</li>
+                      <li>Light make up.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 0.43rem;">
+                    <div class="indicator" style="width: 0.78rem;"></div>
+                    <header>Shirt</header>
+                    <ul>
+                      <li>Battery World Polo</li>
+                      <li>Clean, ironed</li>
+                      <li>No spills or faded colours.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 1.20rem;">
+                    <div class="indicator" style="width: 0.98rem;"></div>
+                    <header>Pants</header>
+                    <ul>
+                      <li>Black slacks</li>
+                      <li>Clean, ironed</li>
+                      <li>No spills or faded colours.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 1.09rem;">
+                    <div class="indicator" style="width: 1.04rem;"></div>
+                    <header>Shoes</header>
+                    <ul>
+                      <li>Black closed in shoes.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="uniform-wrapper">
+                <img class="photo" src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/79979a1fa57f5a29a3adb96cf6a4727f/Image%202.png" style="top: 0.23rem;left: 0.13rem;width: 2.13rem;">
+                <div class="details">
+                  <div class="item" style="margin-top: 0.22rem;">
+                    <div class="indicator" style="width: 1.19rem;"></div>
+                    <header>Hair &amp; face</header>
+                    <ul>
+                      <li>Clean and groomed</li>
+                      <li>Clean shaved.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 0.71rem;">
+                    <div class="indicator" style="width: 0.5rem;"></div>
+                    <header>Shirt</header>
+                    <ul>
+                      <li>Battery World Polo</li>
+                      <li>Clean, ironed</li>
+                      <li>No spills or faded colours.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 1.75rem;">
+                    <div class="indicator" style="width: 0.73rem;"></div>
+                    <header>Pants</header>
+                    <ul>
+                      <li>Black trousers</li>
+                      <li>Clean, ironed</li>
+                      <li>No spills or faded colours.</li>
+                    </ul>
+                  </div>
+                  <div class="item" style="margin-top: 1.32rem;">
+                    <div class="indicator" style="width: 0.63rem;"></div>
+                    <header>Shoes</header>
+                    <ul>
+                      <li>Black closed in shoes.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="uniform-wrapper">
+              <img class="photo" src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/59628ec0fe1bfc26101450c6118263bb/Image%201.png" style="top: 1.2rem;left: 0.20rem;width: 1.82rem;">
+              <div class="details" style="margin-right: -0.04rem;">
+                <div class="item" style="margin-top: 1.14rem;">
+                  <div class="indicator" style="width: 1.24rem;"></div>
+                  <header>Hair &amp; face</header>
+                  <ul>
+                    <li>Clean and groomed</li>
+                    <li>Light make up.</li>
+                  </ul>
+                </div>
+                <div class="item" style="margin-top: 0.46rem;">
+                  <div class="indicator" style="width: 0.79rem;"></div>
+                  <header>Shirt</header>
+                  <ul>
+                    <li>Battery World Polo</li>
+                    <li>Clean, ironed</li>
+                    <li>No spills or faded colours.</li>
+                  </ul>
+                </div>
+                <div class="item" style="margin-top: 1.68rem;">
+                  <div class="indicator" style="width: 0.98rem;"></div>
+                  <header>Pants</header>
+                  <ul>
+                    <li>Black slacks</li>
+                    <li>Clean, ironed</li>
+                    <li>No spills or faded colours.</li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script>
+    window.showCrop = '{{show-crop}}' == 'true';
+
+    if (window.showCrop) {
+        document.querySelector('body').classList.add('show-crop');
+    } else {
+        document.querySelector('body').classList.add('hide-crop');
+    }
+  </script>
+
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+
+  <script>
+    LuHelper.lazy();
+  </script>
+
+  </body>
+</html>
