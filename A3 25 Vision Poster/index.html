@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    >
+    </script>
+    <script src="lu-helper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
+
+    <style>
+      .placeholder {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/47cc8a9459fe20362f8e6b7b2495f63a/BW%200742J_A3-P_420x297%20Poster.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+
+    </style>
+  </head>
+  <body style="background: white">
+    <div class="page">
+
+      <div class="bleed center-children">
+
+       	<!--<div class="placeholder"></div>-->
+          <img class="background" src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/6fb161b5fd15414287fb5c90d85be56e/background.svg">
+          <div class="container">
+            <div class="row">
+                <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/ed7e749b9a606cb8fd6495121848b72a/battery.svg">
+                  <div class="vision-content">BATTERYOLOGY FOR YOU<br> ANYWHERE, ANYTIME</div>
+               </div>
+            </div>
+            <div class="row">
+                <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/bc8922499a938d385ca4bfaccfdbe167/percentage.svg">
+                  <div class="vision-content">13%<br>EBITDA</div>
+               </div>
+               <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/ace514addc2e64bebd79310958bca3f5/money.svg">
+                  <div class="vision-content">$1.5m<br>Avg. Sales</div>
+               </div>
+               <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/3f90211fa70df3d7eb2643f20623dcd7/location.svg">
+                  <div class="vision-content">160<br>STORES</div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/e492bb29fc50273f7456dfd8f416cb28/cashbag.svg">
+                  <div class="vision-content">BWSO<br>exists to grow<br>your wealth</div>
+               </div>
+               <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/16221f22ebbd7de4fc4b0991e0d1ad19/handbag.svg">
+                  <div class="vision-content">BWSO<br>serves<br>you</div>
+               </div>
+               <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/97ffd417aef100ba5ce9f733c6696e2c/Crown.svg">
+                  <div class="vision-content">The<br>customer<br>is king</div>
+               </div>
+               <div class="vision">
+                  <img src="https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/045e82016951de5620deac0766f4216a/blockchain.svg">
+                  <div class="vision-content">Come on<br> the journey <br> together</div>
+               </div>
+            </div>
+            
+          </div>
+    	  <div class="date">
+              09102018
+            </div>
+
+
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+  <script>
+    window.showCrop = {{show-crop}};
+
+    //--------------------------- reposition image fix -----------------------------------
+
+    function checkCrop() {
+      if ({{show-crop}} === true) {
+      } else {
+        [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+          el.parentNode.style.left = '0';
+          el.parentNode.style.right = '0';
+          el.parentNode.style.top = '0';
+          el.parentNode.style.bottom = '0';
+          el.parentNode.style.width = '100%';
+          el.parentNode.style.height = '100%';
+        });
+      }
+    }
+
+    checkCrop();
+
+    //--------------------------- add crop class to page -----------------------------------
+
+    function addCropClass() {
+      if ({{show-crop}} === true) {
+        document.body.classList.add('crop-marks-true')
+      } else {
+        document.body.classList.add('crop-marks-false')
+      }
+    }
+
+    addCropClass();
+  </script>
+
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+
+  <script>
+
+    LuHelper.lazy();
+  </script>
+
+  </body>
+</html>
