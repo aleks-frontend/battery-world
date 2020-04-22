@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Gotham/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css');
+
+      :root {
+        --yellow: {{{account.colors.yellow}}};
+        --white: {{{account.colors.white}}};
+        --purple: {{{account.colors.purple}}};
+        --red: {{{account.colors.red}}}
+      }
+
+      html {
+        font-family: 'Museo Sans';
+        font-size: 11pt;
+        color: #000;
+      }
+
+      strong {
+        font-weight: 900;
+      }    
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }   
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        background: var(--purple);
+      }
+
+      .logo__container {
+        position: absolute;
+        left: 6.26rem;
+        bottom: -0.45rem;
+        width: 5.71rem;
+        text-align: center;
+        font-size: 0;
+        background-color: var(--purple);
+      }
+
+      .logo {
+        width: 89.6%;
+        margin-left: 0.09rem;
+      }
+
+      .logo__square {
+        position: absolute;
+        top: 0.28rem;
+        width: 0.26rem;
+        height: 0.26rem;
+      }
+
+      .logo__square--left {
+        background-color: var(--yellow);
+        left: -0.26rem;
+      }
+
+      .logo__square--left::before,
+      .logo__square--left::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--purple);
+      }
+
+      .logo__square--left::before {
+        width: 0.05rem;
+        height: 0.15rem;
+      }
+
+      .logo__square--left::after {
+        width: 0.15rem;
+        height: 0.03rem;
+      }
+
+      .logo__square--right {
+        right: -0.25rem;
+        background-color: var(--white);
+      }
+
+      .logo__square--right::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 0.03rem;
+        width: 0.15rem;
+        background-color: var(--purple);
+      }
+
+      .switch {
+        position: absolute;
+        top: -0.07rem;
+        left: 9.96rem;
+        width: 1.7rem;
+        height: 0.12rem;
+        background-color: var(--purple);
+      }
+
+      .switch::before,
+      .switch::after {
+        content: '';
+        position: absolute;
+        width: 0.34rem;
+        height: 0.34rem;
+        border: 0.05rem solid var(--white);
+        border-radius: 50%;
+        top: -0.12rem;
+        background-color: var(--yellow);
+      }
+
+      .switch::before {
+        left: -0.3rem;
+      }
+
+      .switch::after {
+        left: 1.62rem;
+      }
+
+      .switch__line {
+        width: 1.77rem;
+        height: 0.05rem;
+        transform: rotate(-11.6deg);
+        transform-origin: 0rem 0rem;
+        background-color: var(--white);
+      }
+
+      .body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin: 1.05rem 0.73rem 0.53rem 0.72rem;
+        padding: 0.77rem 0.7rem 0.62rem 0.8rem;
+        border: 0.05rem solid var(--white);
+        border-radius: 0.6rem;
+        word-break: break-word;
+      }
+      
+
+     
+      .heading {
+        color: var(--white);
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 2.68rem;
+        margin-bottom: -0.125em;
+      }
+
+      .heading strong {
+        color: #fdb813;
+      }
+
+      .subheading {
+        color: var(--white);
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 2.08rem;
+		line-height: 1.05em;
+      }
+
+      .subheading strong {
+        color: #fdb813;
+      }
+
+      .body__middle {
+        flex: 1;
+      }
+
+      .main {
+        display: flex;
+        height: 100%;
+      }
+
+      .main__left {
+        position: relative;
+        width: 5.28rem;
+      }
+
+      .heroImage {
+        position: absolute;
+        width: 118%;
+        height: calc(100% - 1.72rem);
+        max-width: none;
+        object-fit: contain;
+        object-position: top center;
+        bottom: 0;
+      }
+
+      .main__right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        padding: 0.16rem 0rem 0.35rem 0.19rem;
+      }
+
+      .speechBubble {
+        position: relative;
+        width: 6.12rem;
+        height: 3.11rem;
+        background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='565.355px' height='275.862px' viewBox='0 0 386.355 175.862' enable-background='new 0 0 386.355 175.862' xml:space='preserve'%3E%3Cpath fill='%23fff' stroke='%23070606' stroke-width='5.327' stroke-linejoin='round' stroke-miterlimit='10' d='M226.894,2.664 c-86.598,0-156.799,38.176-156.799,85.268c0,6.141,1.205,12.127,3.473,17.9c-17.978,21.104-70.904,31.773-70.904,31.773 c59.057,0,79.329-5.504,86.274-9.115c26.527,26.627,78.357,44.709,137.956,44.709c86.598,0,156.799-38.177,156.799-85.268 C383.692,40.84,313.491,2.664,226.894,2.664z'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-left: -1.80rem;
+      }
+
+      .speechBubble__text {
+        position: absolute;
+        top: 0.92rem;
+        left: 1.47rem;
+        font-size: 0.27rem;
+        text-align: center;
+        font-weight: 900;
+        line-height: 1.3em;
+        letter-spacing: -0.1pt;
+      }
+
+      .disclaimer {
+        font-size: 0.23rem;
+        font-weight: 700;
+        color: var(--red);
+      }
+
+      .disclaimer strong {
+        font-weight: 900;
+        color: var(--red);
+      }
+
+      .text {
+        font-size: 0.54rem;
+        font-weight: 900;
+        color: var(--white);
+        text-transform: uppercase;
+        line-height: 1.25em;
+        letter-spacing: -1.3pt;
+      }
+
+      .text strong {
+        color: #fdb813;
+      }
+
+      .text--secondary {
+        font-size: 0.58rem;
+      }
+
+      .body__bottom {
+        color: var(--white);
+        padding-left: 0.23rem;
+      }
+
+      .info__container {
+        display: flex;
+      }
+
+      .info--address {
+        font-size: 0.33rem;
+        font-weight: 900
+      }
+
+      .footer {
+        height: 0.98rem;
+        padding: 0rem 0.95rem 0.37rem 0.98rem;
+      }
+
+      .terms {
+        color: var(--white);
+        font-size: 0.16rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+
+      .info--phone {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        margin-bottom: -2.9pt;
+        font-family: 'Gotham';
+        text-align: center;
+        font-size: 0.65rem;
+        font-weight: 900;
+        letter-spacing: -1pt;
+        width: 48%;
+        padding-left: 0.44rem;
+      }
+
+      .phone__icon {
+        background-image: url(https://files.outfit.io/media_library_items/85310/Phone.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 0.64rem;
+        width: 0.51rem;
+        margin-right: 0.12rem;
+      }
+
+      .phone__number {
+        display: inline-block;
+        position: relative;
+        display: none;
+        width: 63%;
+      }
+
+      .phone--number-13 .phone__number--13 {
+        display: flex;
+      }
+
+      .phone--branch-number .phone__number--branch {
+        display: flex;
+        width: 90%;
+      }
+
+      .layout-1 .body__bottom {
+        display: none;
+      }
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} 
+                                         {{{BW_poster-layout--brp}}}{{^BW_poster-layout--brp}}layout-2{{/BW_poster-layout--brp}}" data-crop="{{show-crop}} ">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="body">
+            <div class="logo__container">
+              <img class="logo" src="{{{account.logos.primary}}}">
+              <div class="logo__square logo__square--left"></div><!--logo__leftSquare-->
+              <div class="logo__square logo__square--right"></div><!--logo__rightSquare-->
+            </div><!--logo__container-->
+            <div class="switch">
+              <div class="switch__line"></div><!--switch__line-->
+            </div><!--switch-->
+            <div class="body__top">
+              <div class="heading textFit" data-max-line="2">{{{BW_heading-text--brp}}}</div><!--heading-->
+              <div class="subheading textFit" data-max-line="2">{{{BW_subheading-text--brp}}}</div><!--subheading-->
+            </div><!--body__top-->
+            <div class="body__middle">
+              <div class="main">
+                <div class="main__left">
+                  <img class="heroImage" src="https://files.outfit.io/media_library_items/85311/Man%2520icon.png"><!--heroImage-->
+                </div><!--main__left-->
+                <div class="main__right">
+                  <div class="main__top">
+                    <div class="speechBubble">
+                      <div class="speechBubble__text">
+                        KIDS,<br> PLEASE ONLY SMALL BATTERIES,<br> AAs, AAAs, 9v etc.<br><span style="font-weight: 300;">(no lithium)</span>
+                      </div><!--speechBubble__text-->
+                    </div><!--speechBubble-->
+                    <div class="disclaimer" data-max-line="2">{{{BW_safety-disclaimer--brp}}}</div><!--disclaimer-->
+                  </div><!--main__top-->
+                  <div class="main__bottom">
+                    <div class="text text--primary" data-max-line="7">{{{BW_footer-text-1--brp}}}</div><!--text-->
+                  </div><!--main__bottom-->
+                </div><!--main__right-->
+              </div><!--main-->
+            </div><!--body__middle-->
+            <div class="body__bottom">
+              <div class="text text--secondary" data-max-line="7">{{{BW_footer-text-2--brp}}}</div><!--text-->
+              <div class="info__container">
+                <div class="info info--address">{{{team.address}}}{{^team.address}}Battery World Townsville<br> 245 Ingham Rd, Garbutt QLD 4814{{/team.address}}</div><!--info--address-->
+                <div class="info info--phone phone--{{{BW_phone-number--brp}}}">
+                  <div class="phone__icon"></div><!--phone__icon-->
+                  <span class="phone__number phone__number--13">
+                    <span class="textFit">13 17 60</span><!--textFit-->
+                  </span><!--number--13-->
+                  <span class="phone__number phone__number--branch">
+                    <span class="textFit">{{{team.phone}}}</span><!--textFit-->
+                  </span><!--number--branch-->
+                </div><!--info--phone-->
+              </div><!--info__container-->
+            </div><!--body__bottom-->
+          </div><!--body-->
+          <div class="footer">
+            <div class="terms" data-max-line="3">{{{BW_terms-conditions--brp}}}</div><!--terms-->
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+      
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+		if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();      
+
+    </script>
+
+
+  </body>
+</html>
