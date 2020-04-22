@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A Frame - Dual Battery Fitting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <script src="prefixfree.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.0/dist/ResizeObserver.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/javascript-debounce@1.0.0/dist/javascript-debounce.min.js"></script>  
+
+    <style>
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Museo Sans', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+      }
+
+      .bleed {
+        background: rgba(66, 51, 147, 1);
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 900;
+        font-family: 'Museo Sans', sans-serif;
+      }
+
+      h1 { font-size: 7.141em; line-height: 0.8em; }
+      h2 { font-size: 2.617em; line-height: 1em; }
+
+      sup { font-size: 0.5em; }
+
+      small { font-size: 0.45em; }
+
+      ul {
+        padding-left: 0.1em;
+        margin: 0.6em 0 0 0;
+        line-height: 1.3em;
+      }
+
+      li {
+        margin-bottom: 0.3em;
+        display: flex;
+      }
+
+      li:before {
+        content: "\2022";
+      }
+
+      .white {
+        color: rgb(255, 255, 255);
+      }
+
+      .primary-violet {
+        color: rgba(66, 51, 147, 1);
+      }
+
+      .primary-gold {
+        color: rgba(253, 187, 48, 1);
+      }
+
+      .fit {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 3mm;
+        position: absolute;
+      }
+
+      .wrapper {
+        margin: 0 !important;
+        padding: 11.81em 2.49em 4.2em 2.55em;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        height: 100%;
+      }
+
+      /* Customs */
+      .legend {
+        border: solid 2px #ffffff;
+        border-radius: 2.5em;
+        padding: 9.2em 3em 5.1em 3.2em;
+        flex-direction: row;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+
+      .wave {
+        position: absolute;
+        top: -16px;
+        left: 3.5em;
+      }
+
+      .wave img {
+        position: relative;
+        height: 30px;
+      }
+
+      .wave .mask {
+        display: block;
+        height: 2.9em;
+        width: 100%;
+        background: rgba(64, 51, 147, 1);
+        position: absolute;
+        top: 0;
+        margin-left: 0.7em;
+      }
+
+      .logo {
+        position: absolute;
+        top: -8.956em;
+        margin-left: 0.25em;
+      }
+
+      .logo img { position: relative; }
+
+      .logo .mask {
+        display: block;
+        height: 1em;
+        width: 27.8em;
+        background: rgba(64, 51, 147, 1);
+        position: absolute;
+        top: 8.7em;
+        margin-top: -0.2em;
+        margin-left: 0.8em;
+      }
+
+      .logo .mask:before,
+      .logo .mask:after {
+        width: 0.9em;
+        height: 0.9em;
+        background: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/fd5cc50be43d099711ba88219d2cf6fe/dot.svg") center no-repeat;
+        background-size: 100%;
+        display: block;
+        content: "";
+        position: absolute;
+        top: -0.35em;
+        left: -0.45em;
+      }
+
+      .logo .mask:after {
+        left: auto;
+        right: -0.45em;
+      }
+
+      .price { font-family: 'Museo Sans', sans-serif; }
+      .code { position: absolute; right: 1.1em; bottom: 1.3em; }
+
+      .battery {
+        position: absolute;
+        bottom: -12px;
+        right: 1.35em;
+        background: rgba(66, 51, 147, 1);
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 2em;
+        width: 10.92em;
+        /* Negative margin to ensure element overlays border correctly */
+        margin: 0 -1px;
+      }
+      /*.row:first-child .battery {
+        bottom: -10px;
+      }*/
+	.battery img { 
+        width: calc(100% - 1rem); /* 1rem is the combined width of the plus and minus */
+		padding: 0 0.35rem;
+      }
+
+      .plus,
+      .minus {
+        height: 7px;
+        width: 7px;
+        position: relative;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+      }
+      .plus {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2ee7432835134a59b3cf0dc7895e65d8/plus.svg');
+      }
+      .minus {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/56fcdaec07b4c55402a27534df0f7ec7/minus.svg');
+      }
+
+      .content {
+        padding: 1.3em 1.1em;
+        height: 100%;
+        width: 100%;
+        background: #ffffff;
+        color: #231F20;
+        font-size: 2em;
+        font-family: 'Museo Sans', sans-serif;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* 4UP */
+      .four-up {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+      }
+
+      .row .wrapper {
+        width: 50%;
+        font-size: 0.5em;
+      }
+
+      /* Media Queries */
+      @media (max-aspect-ratio: 1/3) {
+        html {
+          font-size: 10vw !important;
+        }
+      }
+
+      @media (min-aspect-ratio: 2/1) {
+        #wrapper {
+          justify-content: center;
+          align-items: center;
+          flex-direction: row;
+        }
+      }
+
+      @media (min-aspect-ratio: 4/1) {
+        #wrapper {
+          justify-content: space-around;
+        }
+      }
+
+      @media (min-aspect-ratio: 8/1) {
+        html {
+          font-size: 20vh !important;
+        }
+      }
+
+      /* 1UP AUTO */
+      .auto .wrapper { padding-top: 11.81em; }
+      .auto .logo { top: -8.956em; margin-left: 0.3em; }
+      .auto .logo img { height: 15.6956em; }
+
+      /* 1UP BOAT */
+      .boat .wrapper { padding-top: 15em; }
+      .boat .logo { 
+        top: -9.08em;
+        margin-left: 0.05em; 
+      }
+      .boat .logo img { height: 9.5em; }
+      .boat .logo .mask { 
+          width: 66%;
+          top: 8.87em;
+          margin-left: 4.1em;
+      }
+      .boat .legend { padding-top: 6em; }
+
+      /* 1UP CAMP */
+      .camp .wrapper { padding-top: 16.3em; }
+      .camp .logo { top: -14.5em; margin-left: 0.1em; }
+      .camp .logo img { height: 15.1em; }
+      .camp .logo .mask { width: 25.9em; top: 14.5em; margin-left: 0.1em; }
+      .camp .legend { padding-top: 4.8em; }
+
+      /* 1UP MOTO */
+      .moto .wrapper { padding-top: 15em; }
+      .moto .logo { top: -10.78em; margin-left: -0.35em; }
+      .moto .logo img { height: 14.55em; }
+      .moto .logo .mask { 
+        width: 25.9em; 
+        top: 10.64em;
+        margin-left: 0.1em; 
+      }
+      .moto .legend { padding-top: 6em; }
+      
+      /* 1UP CAMPAIGN */
+      .campaign .wrapper { padding-top: 9.1em; }
+      .campaign .logo { 
+        top: -6.9em;
+        margin-left: -0.35em;
+        width: 37.3em;
+      }
+      .campaign .logo img { height: 9.75em; }
+      .campaign .logo .mask { 
+        width: 37em;
+        top: 6.38em;
+        margin-left: 0.2em;
+      }
+      
+      .campaign .logo .mask:before, .campaign .logo .mask:after {
+        display: none;
+      }
+      
+      .campaign .legend { padding-top: 4.2em; }
+
+      @media print {
+        .screen .bleed {
+          background: none;
+        }
+
+        .screen .logo {
+          opacity: 0;
+        }
+
+        .screen .battery {
+          opacity: 0;
+        }
+
+        .screen .wave {
+          opacity: 0;
+        }
+
+        .screen .legend {
+          border: solid 0.2em transparent;
+        }
+      }
+      
+      .overflow-container {
+        max-height: 23.6em;
+      }
+
+      .overflow{border:1px dashed red;position:relative}.overflow::before,.overflow:hover:after{position:absolute;right:5px;box-sizing:border-box}.overflow h1,.overflow h2,.overflow h3,.overflow h4,.overflow h5,.overflow h6,.overflow li,.overflow p{color:red!important}.overflow::before{content:'+';z-index:5;top:5px;height:15px;width:15px;border:1px solid red;color:red;padding:2px 2px 2px 3px;font-size:13px;line-height:8px;background-color:#fff;text-align:center}.overflow:hover:before{background-color:red;color:#fff}.overflow:after{display:none}.overflow:hover:after{display:block;content:'There is overset content in this column. Please remove it';top:25px;background-color:#000;color:#fff;border-radius:2px;padding:5px;font-size:11px;font-weight:400;line-height:1.1em;text-align:right;width:15em}
+
+      .fittext {
+        width: 100%;
+      }
+
+      .fittext h1 {
+        white-space: nowrap;
+        display: inline-block;	
+      }
+      .prev {
+        font-size: 0.2rem;
+        padding-top: 1rem;
+      }
+      #jsPrevPrice {
+        position: relative;
+        padding: 9px;
+      }
+      #jsPrevPrice:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 47%;
+        right: 0;
+        border-top: 3px solid;
+        border-color: inherit;
+
+        transform: rotate(-13deg);
+      }
+      .prevPriceDisplay {
+        position: relative;
+      }
+      .preSup {
+        position: absolute;
+        font-size: 1rem;
+      }
+
+    </style>
+  </head>
+  <body class="{{{ product-category }}}" style="background: white;">
+    <div class="page">
+      <div class="bleed center-children">
+
+        <div class="fit">
+          <!--<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/de34b2817eb6916d17643b983247c399/Screen%20Shot%202018-09-24%20at%2010.45.29%20am.png'); background-size: cover; background-position: center; z-index: 100; opacity: 0.7; pointer-events: none;"></div>-->
+          <div class="four-up">
+            <div class="wrapper">
+              <div class="legend">
+                <div id="header-elements"></div>
+                <div class="content">
+                  <div class="overflow-container">
+                    <div class="product-overflow-1">
+                      <h2>{{{ product-1-name }}}</h2>
+                      <ul>
+                        {{#spreadsheet.product-1-features}}
+                        <li>{{{ feature }}}</li>
+                        {{/spreadsheet.product-1-features}}
+                      </ul>
+                      <!--Adding previous price on top of the current price -->
+                      {{#previousPrice-1}}
+                      <div class="prev">
+                        <h1 class="prevPrice fittext-price">Was 
+                          <span class="prevPriceDisplay">
+                            <sup><span class="preSup">$</span></sup>
+                            <span id="jsPrevPrice">{{{ previousPrice-1 }}}</span>
+                          </span></h1>
+                      </div>
+                      {{/previousPrice-1}}
+                       <!-- end of previous price -->
+                      {{#price-1}}<div class="fittext"><h1 class="price fittext-price-1"><sup>$</sup><span class="jsPrice">{{{price-1}}}</span></h1></div>{{/price-1}}
+                    </div>
+
+                    <p class="code">
+                      <small>{{{ product-1-code }}}</small>
+                    </p>
+                  </div>
+                </div>
+                <div class="battery">
+                  <div class="plus">
+                    <span class="vertical"></span>
+                    <span class="horizontal"></span>
+                  </div>   
+                  <img src="{{{account.logos.primary}}}" />
+                  <div class="minus">
+                    <span></span>
+                  </div>                 
+                </div>
+              </div>
+            </div><!--wrapper-->
+
+            <div class="wrapper">
+              <div class="legend">
+                <div id="header-elements"></div>
+                <div class="content">
+                  <div class="overflow-container">
+                    <div class="product-overflow-2">
+                      <h2>{{{ product-2-name }}}</h2>
+                      <ul>
+                        {{#spreadsheet.product-2-features}}
+                        <li>{{{ feature }}}</li>
+                        {{/spreadsheet.product-2-features}}
+                      </ul>
+                      <!--Adding previous price on top of the current price -->
+                      {{#previousPrice-2}}
+                      <div class="prev">
+                        <h1 class="prevPrice fittext-price">Was 
+                          <span class="prevPriceDisplay">
+                            <sup><span class="preSup">$</span></sup>
+                            <span id="jsPrevPrice">{{{ previousPrice-2 }}}</span>
+                          </span></h1>
+                      </div>
+                      {{/previousPrice-2}}
+                      <!-- end of previous price -->
+                      
+                      {{#price-2}}<div class="fittext"><h1 class="price fittext-price-2"><sup>$</sup><span class="jsPrice">{{{price-2}}}</span></h1></div>{{/price-2}}
+                    </div>
+
+                    <p class="code">
+                      <small>{{{ product-2-code }}}</small>
+                    </p>
+                  </div>
+                </div>
+                <div class="battery">
+                  <div class="plus">
+                    <span class="vertical"></span>
+                    <span class="horizontal"></span>
+                  </div>   
+                  <img src="{{{account.logos.primary}}}" />
+                  <div class="minus">
+                    <span></span>
+                  </div>                 
+                </div>
+              </div>
+            </div><!--wrapper-->
+
+            <div class="wrapper">
+              <div class="legend">
+                <div id="header-elements"></div>
+                <div class="content">
+                  <div class="overflow-container">
+                    <div class="product-overflow-3">
+                      <h2>{{{ product-3-name }}}</h2>
+                      <ul>
+                        {{#spreadsheet.product-3-features}}
+                        <li>{{{ feature }}}</li>
+                        {{/spreadsheet.product-3-features}}
+                      </ul>
+                      <!--Adding previous price on top of the current price -->
+                      {{#previousPrice-3}}
+                      <div class="prev">
+                        <h1 class="prevPrice fittext-price">Was 
+                          <span class="prevPriceDisplay">
+                            <sup><span class="preSup">$</span></sup>
+                            <span id="jsPrevPrice">{{{ previousPrice-3 }}}</span>
+                          </span></h1>
+                      </div>
+                      {{/previousPrice-3}}
+                      <!-- end of previous price -->
+                      {{#price-3}}<div class="fittext"><h1 class="price fittext-price-3"><sup>$</sup><span class="jsPrice">{{{price-3}}}</span></h1></div>{{/price-3}}
+                    </div>
+
+                    <p class="code">
+                      <small>{{{ product-3-code }}}</small>
+                    </p>
+                  </div>
+                </div>
+                <div class="battery">
+                  <div class="plus">
+                    <span class="vertical"></span>
+                    <span class="horizontal"></span>
+                  </div>   
+                  <img src="{{{account.logos.primary}}}" />
+                  <div class="minus">
+                    <span></span>
+                  </div>                 
+                </div>
+              </div>
+            </div><!--wrapper-->
+
+            <div class="wrapper">
+              <div class="legend">
+                <div id="header-elements"></div>
+                <div class="content">
+                  <div class="overflow-container">
+                    <div class="product-overflow-4">
+                      <h2>{{{ product-4-name }}}</h2>
+                      <ul>
+                        {{#spreadsheet.product-4-features}}
+                        <li>{{{ feature }}}</li>
+                        {{/spreadsheet.product-4-features}}
+                      </ul>
+                      <!--Adding previous price on top of the current price -->
+                      {{#previousPrice-4}}
+                      <div class="prev">
+                        <h1 class="prevPrice fittext-price">Was 
+                          <span class="prevPriceDisplay">
+                            <sup><span class="preSup">$</span></sup>
+                            <span id="jsPrevPrice">{{{ previousPrice-4 }}}</span>
+                          </span></h1>
+                      </div>
+                      {{/previousPrice-4}}
+                      <!-- end of previous price -->
+                      {{#price-4}}<div class="fittext"><h1 class="price fittext-price-4"><sup>$</sup><span class="jsPrice">{{{price-4}}}</span></h1></div>{{/price-4}}
+                    </div>
+
+                    <p class="code">
+                      <small>{{{ product-4-code }}}</small>
+                    </p>
+                  </div>
+                </div>
+                <div class="battery">
+                  <div class="plus">
+                    <span class="vertical"></span>
+                    <span class="horizontal"></span>
+                  </div>   
+                  <img src="{{{account.logos.primary}}}" />
+                  <div class="minus">
+                    <span></span>
+                  </div>                 
+                </div>
+              </div>
+            </div><!--wrapper-->
+
+          </div>
+        </div>
+
+
+      </div><!--bleed-->
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}};
+
+      if (window.showCrop) {
+        document.body.classList.add("print")
+      } else {
+        document.body.classList.add("screen")
+      }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+
+    <script>
+      setInterval(function(){ 
+        checkHeight(document.getElementsByClassName('product-overflow-1'));
+        checkHeight(document.getElementsByClassName('product-overflow-2'));
+        checkHeight(document.getElementsByClassName('product-overflow-3'));
+        checkHeight(document.getElementsByClassName('product-overflow-4'));
+        fittext(document.getElementsByClassName('fittext-price-1'));
+        fittext(document.getElementsByClassName('fittext-price-2'));
+        fittext(document.getElementsByClassName('fittext-price-3'));
+        fittext(document.getElementsByClassName('fittext-price-4'));
+      }, 1000);
+
+      // FIT TEXT FUNC
+      function fittext(els){
+        for(var i = 0; i < els.length; ++i) {
+          while($(els[i]).width() > $(els[i]).parent().width()) {
+            var size = parseInt($(els[i]).css('font-size')); 
+            $(els[i]).css('font-size', size - 1); 
+          }
+        }
+      }
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true');
+          }
+        }
+      }
+    </script>
+
+    <script>
+      $.fn.chunk = function(size) {
+        var arr = [];
+        for (var i = 0; i < this.length; i += size) {
+          arr.push(this.slice(i, i + size));
+        }
+        return this.pushStack(arr, "chunk", size);
+      }
+
+      $(".wrapper").chunk(2).wrap('<div class="row"></div>');
+
+      if (document.body.classList.contains('auto')) {
+        $('.legend').append('<div class="wave"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/22f7332f9ca969f22b01969f7db62d8e/wave.svg" alt="" /> </div> <div class="logo"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3160ec1e92112f20c624599eee5c309f/auto.svg" alt=""/> </div>')  
+      } else if (document.body.classList.contains('moto')) {
+        $('.legend').append('<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2df1988a7d5ab1d8f69540990e6dbc43/moto.svg" alt=""/> </div>')
+      } else if (document.body.classList.contains('camp')) {
+        $('.legend').append('<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/7983774d347b0cf1f95be400b399fb45/camp.svg" alt=""/> </div>')
+      } else if (document.body.classList.contains('boat')) {
+        $('.legend').append('<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/49a6e90a616f4cc4a1faa140cf43f241/boat.svg" alt=""/> </div>')
+      } else if (document.body.classList.contains('campaign')) {
+        $('.legend').append('<div class="logo primary"> <span class="mask"></span> <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/051ae17725f0878d3847b9f4bc9312c4/Asset%201.svg" alt=""/> </div>')
+      }
+
+
+      var prices = Array.prototype.slice.call(document.querySelectorAll('.jsPrice'))
+
+      prices.forEach(function(price) {
+        var text = price.innerText;
+        var priceSplit = text.split(".");
+        var priceSplitFormatting = priceSplit[0];
+        price.innerHTML = priceSplitFormatting
+     })
+      
+      <!-- Code for adding previous price -->
+      
+      var prevPrices = Array.prototype.slice.call(document.querySelectorAll('.jsPrevPrice'))
+
+      prevPrices.forEach(function(prevPrice) {
+        var text = prevPrice.innerText;
+        var prevPriceSplit = text.split(".");
+        var prevPriceSplitFormatting = prevPriceSplit[0] + prevPriceSplit[1].sup();
+        prevPrice.innerHTML = prevPriceSplitFormatting;
+      })
+    </script>
+  </body>
+</html>
