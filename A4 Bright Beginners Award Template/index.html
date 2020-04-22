@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      :root {
+        --bgPurple : {{{account.colors.purple}}};
+        --bgYellow : {{{account.colors.yellow}}};
+      }
+
+      * {
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      html, body {
+        font-size: 10px !important;
+      }
+
+      body{
+        font-family: 'Museo Sans';
+      }
+
+      .overflow {
+        border: 1px dashed red;
+        position: relative;
+        color: red !important; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      
+      /* ------------------------------------------------------------------------- */
+      
+      .test-background-image {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3f8f05b287a571522e305d3a6bd750a3/Bright_Beginners_Award_-_Belmont_WA_-_20180627.png');
+        position: absolute;
+        opacity: 0.4;
+        z-index: 2;
+        background-position: center;
+        background-size: contain;
+        top: 3mm;
+        bottom: 3mm;
+        left: 3mm;
+        right: 3mm;
+      }
+      
+    /* Classes for layout elements */      
+    .main-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #413293;
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+      
+    .content {
+        position: relative;
+        padding: 40pt 46pt 20pt 40pt;
+        height: 480pt;
+        border: 3px solid white;
+        border-radius: 39pt;        
+        width: 725pt;
+    }
+      
+    /* Classes for modules */
+    .logo {
+      width: 281pt;
+    }
+      
+    .logo-wrapper {
+        position: absolute;
+        padding: 0 15pt 0 22pt;
+        top: 0;
+        right: 76pt;
+        background: #413293;
+        transform: translateY(-50%);
+      }
+      
+      .logo-wrapper::before,
+      .logo-wrapper::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: -11.5pt;
+        width: 18pt;
+        height: 18pt;
+        transform: translateY(-53%);
+        background-image: url(https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/201af7d9ecf3672513835f589a5c1fe8/plus.svg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+      }
+      
+      .logo-wrapper::after {
+        left: auto;
+        top: 26pt;
+        right: -12pt;
+        background-image: url(https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/99a9a1e42168623b5cf0ce7d49b225cd/minus.svg);
+      }
+      
+      .open-border {
+        position: absolute;
+        height: 25pt;
+        width: 80pt;
+        bottom: -9px;
+        left: 80pt;
+        transform: translateY(50%);
+        background: #413293;
+      }
+      
+      .line {
+        position: absolute; 
+        top: 15pt;
+        right: 11pt;
+        width: 57pt;
+        height: 2pt;
+        background: #fff;
+        transform: rotate(-16deg);
+      }
+      
+      .line::before,
+      .line::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -31px;
+        left: -9.5pt;
+        width: 13pt;
+        height: 13pt;
+        border: 2pt solid #fff;
+        border-radius: 50%;     
+      }
+      
+      .line::after {
+        left: auto;
+        right: -12pt;
+        top: -4pt; 
+      }
+ 
+      .begginer-award,
+      .recipient-name,
+      .best-new,   
+      .highest-gross {
+        position: absolute;
+        color: #fff;
+      } 
+      
+      .begginer-award {
+        top: 68pt;
+    	left: 0pt;
+    	right: 0pt;
+    	text-align: center;
+        font-size: 45.8pt;
+        font-weight: 900;
+        color: #fdb813; 
+      }
+      
+      .recipient-name {
+        left: 0pt;
+        right: 0pt;
+        text-align: center;
+        top: 138pt;
+        font-size: 41.67pt;
+        font-weight: bold;
+      }
+      
+      .best-new {
+        top: 207pt;
+        left: 0pt;
+        right: 0pt;
+        text-align: center;
+        font-size: 25.3pt;
+        font-weight: bold;
+      }
+      
+      .highest-gross {
+        bottom: 214pt;
+        left: 0pt;
+        right: 0pt;
+        text-align: center;
+        font-size: 25.5pt;
+        font-weight: bold;
+      }
+      
+      .total-revenue {
+      
+        font-size: 46.4pt;
+        font-weight: bold;
+      }
+      
+      .certifier-name,
+      .certifier-title,
+      .date {
+        font-size: 18.72pt;
+        font-weight: bold;
+      }   
+    
+      .clock {  
+        width: 143pt;
+      } 
+      
+      .footer-wrapper {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        left: 40pt;
+        right: 46pt;
+        bottom: 33pt;
+        color: #fff;
+      }
+      
+      .first-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: flex-end;
+        flex-basis: 192pt;
+      }
+      
+      .second-column {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-top: 23pt;
+        padding-bottom: 11pt;
+        text-align: center;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: -6pt;
+      }
+      
+      .third-column {
+        flex-basis: 192pt;
+        text-align: right;
+        padding-right: 5pt;
+      }
+      
+    </style>
+  </head>
+  
+  <body style="background: white">
+     <!--logo-container-->
+    {{#spreadsheet.certificates}}
+    
+    <div class="page">
+      <div class="bleed center-children">
+        <!--<div class="test-background-image"></div>-->
+
+          <div class="main-container">    
+            <div class="content">
+              <div class="logo-wrapper">  
+                  <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f3e7baf12c9a121e2882b115eb13ff29/Group%2012.svg" class="logo" alt="Logo" />
+              </div>
+              <p class="begginer-award">{{{ certification-name }}}</p>
+              <p class="recipient-name">{{{ recipient-name }}}</p>
+              <p class="best-new">{{{ reason }}}</p>
+              <div class="footer-wrapper">
+                <div class="first-column">        
+                  <p class="certifier-name">{{{ certifier-name }}}</p>
+                  <p class="certifier-title">{{{ certifier-title }}}</p>
+                </div>
+                <div class="second-column">                
+                  <p class="total-revenue">{{{ total-revenue }}}</p>
+                  <p class="date">{{{ date }}}</p>
+                </div>
+                <div class="third-column">
+                <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/cbd7fb35a2bd82b909cf51887be3c55d/24Hr%20Logo%20%20White%20Text.svg" class="clock" alt="" />
+                </div>
+              </div>
+              <div class="open-border">  
+                <div class="line"></div>
+              </div>
+            </div><!--content-->
+         </div><!--main-container-->
+        
+      </div><!--bleed-->
+    </div><!--page-->
+    
+    {{/spreadsheet.certificates}}
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="bigtext.js"></script>
+  <script>
+    window.showCrop = {{show-crop}};
+    
+    if (window.showCrop) {
+      document.body.classList.add("print")
+    } else {
+      document.body.classList.add("screen")
+    }
+    
+       function loop() {
+         checkHeight(document.getElementsByClassName('check-overflow'));
+         maxRowsCounter('table', 12);
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+    
+    function countElementLines(e) {
+      const height = e.clientHeight;
+      const lineHeight = parseFloat(window.getComputedStyle(e).getPropertyValue('line-height'));
+      const lines = Math.ceil(height / lineHeight);
+
+      return lines;
+    }
+    
+    /*
+    function maxRowsCounter(tableClass, maxRows) {
+      const rowsNum = document.querySelectorAll(`.${tableClass} tr`).length;
+      if (rowsNum < maxRows) {
+        document.body.classList.remove('more-than-12');        
+        document.body.classList.add('less-than-12');
+      } else {
+        document.body.classList.remove('less-than-12');
+        document.body.classList.add('more-than-12');
+      }
+    }
+    */
+
+    function checkLimitedText() {
+      Array.prototype.slice.call(document.querySelectorAll('.textLimited'))
+        .forEach(function (e) {
+        const limit = e.getAttribute('data-limit');
+        const lines = countElementLines(e);
+
+        if (lines > limit) {
+          e.classList.add("overflow");
+        } else {
+          e.classList.remove("overflow");
+        }
+      });
+    }
+
+    setInterval(checkLimitedText, 1000);
+  </script>
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+  </body>
+</html>
