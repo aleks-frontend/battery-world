@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html data-sign="OSZ">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css');
+
+      :root {
+        --white: {{{account.colors.white}}};
+        --yellow: {{{account.colors.yellow}}};
+        --purple: {{{account.colors.purple}}};
+      }
+
+      /*
+      {{show-crop}}
+      {{ placeholder-opacity }}
+      {{ placeholder-image-1 }}
+      {{ placeholder-toggle-new }}
+      {{ placeholder-validation }}
+      {{{BW_background-image--cth}}}
+      {{{BW_heading-image--cth}}}
+      {{{BW_heading-text--cth}}}
+      {{#spreadsheet.BW_trading-hours--cth}}{{/spreadsheet.BW_trading-hours--cth}} 
+      {{{BW_toggle-phone-number--cth}}}
+      */
+
+      html {
+        font-family: 'Museo Sans', sans-serif;
+        color: var(--white);
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 91pt 60pt 18pt;
+        background-color: var(--purple);
+      }
+
+      .decorationImage {
+        position: absolute;
+        background-image: url(https://files.outfit.io/media_library_items/144887/BW-lines.png);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        top: 48pt;
+        bottom: 40pt;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .header {
+        display: flex;
+        height: 56pt;
+        justify-content: center;
+      }
+
+      .logo {
+        position: absolute;
+        width: 317.4pt;
+        left: 147.8pt;
+        top: 31pt;
+      }
+
+      .branchName {
+        position: relative;
+        text-transform: uppercase;
+        font-size: 14.7pt;
+        font-weight: 900;
+        line-height: 1.2em;
+      }
+
+      .body {
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .heading {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 24pt;
+      }
+
+      .heading__image {
+        height: 105.7pt;
+      }
+
+      .heading__text {
+        display: none;
+        margin-top: 1.6pt;
+        text-transform: uppercase;
+        font-size: 50.1pt;
+        font-weight: 900;
+        line-height: 1em;
+        letter-spacing: -0.8pt;
+        color: var(--yellow);
+      }
+
+      .noHeadingImage .heading__text {
+        display: block;
+      }
+
+      .table {
+        flex: 1;
+      }
+
+      .table__item {
+        display: flex;
+      }
+
+      .table__text {
+        font-size: 28.3pt;
+        font-weight: 900;
+        line-height: 1.2em;
+      }
+
+      .table__text--date {
+        width: 288pt;
+      }
+
+      .info {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-transform: uppercase;
+        font-size: 35.6pt;
+        line-height: 1em;
+      }
+
+      .info__branchName {
+        font-size: 1em;
+        font-weight: 900;
+        line-height: 1em;
+        color: var(--yellow);
+      }
+
+      .info__address {
+        font-size: 0.471em;
+        line-height: 1.2em;
+        font-weight: 900;
+      }
+
+      .footer {
+        position: relative;
+        display: flex;
+        height: 88pt;
+        justify-content: center;
+        align-items: center;
+        padding: 30pt 90pt 0pt;
+      }
+
+      .phone {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 47.2pt;
+      }
+
+      .phone__icon {
+        width: 35pt;
+        margin-right: 16pt;
+      }
+
+      .phone__container {
+        max-width: 234pt;
+        display: flex;
+        line-height: 1em;
+      }
+
+      .phone__number {
+        display: none;
+        text-transform: uppercase;
+        font-size: 1em;
+        line-height: 1em;
+        font-weight: 900;
+      }
+
+      .tooglePhoneNumber--13Number .phone__number--primary{
+        display: block;
+      }
+
+      .tooglePhoneNumber--13Number .phone__container {
+        display: none;
+      }
+
+      .u-yellow {
+        color: var(--yellow);
+      }
+
+      .js-hours-src {
+        display: none;
+      }
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" class="tooglePhoneNumber--{{{BW_toggle-phone-number--cth}}}{{^BW_toggle-phone-number--cth}}branchNumber{{/BW_toggle-phone-number--cth}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="backgroundImage"><div class="reposition-fix">{{{BW_background-image--cth}}}</div></div> <!--backgroundImage-->
+          <div class="decorationImage"></div> <!--decorationImage-->
+          <div class="header">
+            <img class="logo" src="{{{account.logos.white-label}}}"> <!--logo-->
+            <div class="branchName branchName--primary">{{{team.name}}}{{^team.name}}hobart{{/team.name}}</div> <!--branchName--primary-->
+          </div> <!--header-->
+          <div class="body">
+            <div class="heading {{^BW_heading-image--cth}}noHeadingImage{{/BW_heading-image--cth}}">
+              <img class="heading__image" src="{{{BW_heading-image--cth}}}" /> <!--heading__image-->
+              {{#BW_heading-text--cth}}
+              <div class="heading__text" data-max-line="2">{{{BW_heading-text--cth}}}</div> <!--heading__text-->
+              {{/BW_heading-text--cth}}
+            </div> <!--heading-->
+            <div class="table">
+              <div class="table__inner" data-max-height="dynamic">
+                {{#spreadsheet.BW_trading-hours--cth}} 
+                <div class="table__item js-hours-src">
+                  <div class="table__text table__text--date">{{{name-of-date}}}</div> <!--table__text--date-->
+                  <div class="table__text table__text--time">{{{opening-hours}}}</div> <!--table__text--time-->
+                </div> <!--table__item-->
+                <div class="table__item js-hours-target"></div>
+                {{/spreadsheet.BW_trading-hours--cth}} 
+              </div> <!--table__inner-->
+            </div> <!--table-->
+            <div class="info">
+              <div class="info__branchName textFit">Battery World {{{team.name}}}{{^team.name}}Hobart{{/team.name}}</div> <!--info__branchName-->
+              <div class="info__address textFit">{{{team.address}}}{{^team.address}}CNR ARGYLE & WARWICK STREETS, HOBART, TAS, 7000{{/team.address}}</div> <!--info__adress-->
+            </div> <!--info-->
+          </div> <!--body-->
+          <div class="footer">
+            <div class="phone">
+              <img class="phone__icon" src="https://files.outfit.io/media_library_items/144889/BW-Phone_1.svg"><!--phone__icon-->
+              <div class="phone__number phone__number--primary">13 17 60</div> <!--phone__number-->
+              <div class="phone__container">
+                <div class="phone__number phone__number--secondary textFit">{{{team.phone}}}{{^team.phone}}6231 3726{{/team.phone}}</div> <!--phone__number-->
+              </div> <!--phone__container-->
+            </div> <!--phone-->
+          </div> <!--footer-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function hoursInject() {
+        const hoursSrc = document.querySelectorAll('.js-hours-src');
+        const hoursTargets = document.querySelectorAll('.js-hours-target');   
+
+        hoursTargets.forEach((hoursTarget, i) => {
+          if ( hoursSrc[i] !== undefined ) {
+            let date = hoursSrc[i].querySelector('.table__text--date').innerText;
+            let time = hoursSrc[i].querySelector('.table__text--time').innerText;
+            let closed = 'CLOSED';  
+
+            if (time.toLowerCase() === '' || time.toLowerCase() === 'closed') {
+              hoursTarget.innerHTML += `
+<div class="table__text table__text--date u-yellow" data-max-line="1">${date}</div> <!--table__text--date-->
+<div class="table__text table__text--time u-yellow">${closed}</div> <!--table__text--time-->
+`;
+            } else {
+              hoursTarget.innerHTML += `
+<div class="table__text table__text--date" data-max-line="1">${date}</div> <!--table__text--date-->
+<div class="table__text table__text--time" data-max-line="1">${time}</div> <!--table__text--time-->
+`;
+            }
+          }
+        });
+      } 
+
+
+      hoursInject()
+
+    </script>
+
+
+  </body>
+</html>
