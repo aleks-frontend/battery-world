@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html color-primary="{{account.colors.primary}}" logo-primary="{{account.logos.primary}}">
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    >
+    </script>
+    <script src="textfit.js"></script>
+    <script src="lu-helper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
+
+    <style>
+      .placeholder {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        /*background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/393a2933dbbe009ed7101a115dccef15/Multi_Tool_-_A4_Poster_-_20180823.jpg');*/
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0.7;
+        display: none;
+      }
+
+      .placeholder {
+        display: block;
+      }
+
+      .headline-overflow {
+        max-height: 40pt;
+      }
+
+      .bg-primary {
+        background-color: {{{account.colors.primary}}} !important;
+      }
+
+      .fg-primary {
+        color: {{{account.colors.primary}}} !important;
+      }
+
+      .logo-primary {
+        background-image: url("{{{account.logos.primary}}}") !important;
+      }
+
+      [color-reversed] {
+        color: white !important;
+      }
+
+      [logo-reversed] {
+        background-image: url("{{{account.logos.reversed}}}") !important;
+      }
+
+      .bg-purple {
+        background-color: var(--purple);
+      }
+
+      .fg-purple {
+        color: var(--purple);
+      }
+
+      .bg-yellow {
+        background-color: var(--yellow);
+      }
+
+      .fg-yellow {
+        color: var(--yellow);
+      }
+
+      .product-features ul li:before {
+        background-color: var(--purple);
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white">
+
+    <div class="page">
+
+      <div class="bleed center-children">
+
+        <div class="placeholder"></div>
+        <img class="border" src="border.svg">
+        <div class="container fit">
+          <div class="container-1 bg-yellow fg-purple">
+            <div class="headline">
+              <div style="max-height: 2rem; min-height: 2rem;" no-overflow>
+                {{{headline}}}
+              </div>
+            </div>
+            <div class="content">
+              <div class="product-image">
+                {{{batteryword-product-image}}}
+              </div>
+              <div class="product-code" style="max-height: 1em;" no-overflow>
+                {{batteryword-product-code}}
+              </div>
+              <div class="product-features-wrapper">
+                <div class="product-features" no-overflow>
+                  {{{batteryword-product-features}}}
+                </div>
+              </div>
+              <div class="price-wrapper">
+                <div class="price">
+                  <sup class="now">
+                    now
+                  </sup>
+                  <span class="inner">
+                    {{{batteryworld-product-price}}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-2 bg-purple fg-yellow">
+            <div class="headline-bottom">
+              <div style="max-height: 4em" no-overflow>
+                {{headline-bottom}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+  <script>
+    window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+
+    if (window.showCrop) {
+        document.querySelector('body').classList.add('show-crop');
+    } else {
+        document.querySelector('body').classList.add('hide-crop');
+    }
+  </script>
+
+  <script src="main.js"></script>
+
+  <script src="prefixfree.js"></script>
+
+  <script>
+    LuHelper.lazy();
+
+    TextFit.fit({
+      selector: '.price-wrapper .price'
+    });
+  </script>
+
+  </body>
+</html>
