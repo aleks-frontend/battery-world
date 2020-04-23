@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <style>
+      * {
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      body{
+        font-family: 'Museo Sans';
+      }
+      
+      
+      .js-fittext { 
+        font-size: 10pt;
+        line-height: 0;
+        width: 100%;
+      }
+      
+      h1 {
+        display: inline-block;
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 100em;
+        line-height: 0.9em;
+      }
+      
+      h2 {
+        display: inline-block;
+        font-weight: 900;
+        color: #fdb525;
+        text-align: center;
+        font-size: 100em;
+        line-height: 0.9em;
+      }
+
+      .fit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .cover {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      
+      .test-background-image {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/482b9fd8728e6808f8b6925f623b5fa2/A0%20-%20Open%20Arrow%20A%20Frame%20-%2020170920.png');
+        position: absolute; 
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-size: cover;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        opacity: 0.6;
+        z-index: 100;
+      }
+      
+      .logo {
+        background-image: url('{{{account.logos.primary}}}');
+        position: absolute;
+        top: 0.8em;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        height: 2.05em;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      
+      .container {
+        background-color: {{{account.colors.purple}}};
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 1.3em 0.9em 0.9em 0.9em;
+      }
+      
+      .inner-container {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 3em 0.4em 1.2em 0.4em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      
+      .arrow { margin: 0 0 1em 0; }
+      
+      .arrow, .left .arrow {
+        background-image: url('data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%0A%3Csvg%20width%3D%22456px%22%20height%3D%22227px%22%20viewBox%3D%220%200%20456%20227%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22%23FEFEFE%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpolygon%20id%3D%22Fill-1%22%20points%3D%22196.1138%200.0006%2098.0578%2056.6146%20-0.0002%20113.2276%2098.0578%20169.8416%20196.1158%20226.4546%20196.1158%20113.2276%20196.1158%200.0006%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpolygon%20id%3D%22Fill-2%22%20points%3D%22178.487%20158.768%20455.07%20158.768%20455.07%2067.687%20178.487%2067.687%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 10em;
+      }
+      
+      .top .arrow, .bottom .arrow {
+       background-image: url('data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%0A%3Csvg%20width%3D%22227px%22%20height%3D%22305px%22%20viewBox%3D%220%200%20227%20305%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20transform%3D%22translate(113.000000%2C%20152.500000)%20rotate(-270.000000)%20translate(-113.000000%2C%20-152.500000)%20translate(-39.000000%2C%2039.000000)%22%20fill%3D%22%23FEFEFE%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpolygon%20id%3D%22Fill-1%22%20points%3D%22196.1138%200.0006%2098.0578%2056.6146%20-0.0002%20113.2276%2098.0578%20169.8416%20196.1158%20226.4546%20196.1158%20113.2276%20196.1158%200.0006%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpolygon%20id%3D%22Fill-2%22%20points%3D%22178.487%20158.768%20304%20158.768%20304%2067.687%20178.487%2067.687%22%3E%3C%2Fpolygon%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 7.5em;
+      }
+      
+      .right .arrow, .bottom .arrow {
+        transform: rotate(-180deg);
+      }
+      
+      .top .arrow {
+        order: 0;
+      }
+      
+      .top .js-fittext {
+        order: 1;
+      }
+      
+      .bottom .arrow {
+        order: 0;
+      }
+      
+      .bottom .js-fittext {
+        order: 1;
+      }
+      
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+    </style>
+  </head>
+  <body style="background: white">
+    
+    <div class="page {{{ arrow-position }}}">
+      <div class="bleed center-children">
+        <!--<div class="test-background-image"></div>-->
+        
+        <div class="container">
+          <div class="logo"></div>  
+          
+          <div class="inner-container">
+            <div class="js-fittext" id="bigtext-1">{{{ poster-headline }}}</div>
+            <div class="arrow"></div>
+            <div class="js-fittext" id="bigtext-2">{{{ poster-subheading }}}</div>
+          </div><!--inner-container-->
+          
+        </div><!--container--> 
+      </div><!--bleed-->
+    </div><!--page-->
+  
+  <script>
+    window.showCrop = {{show-crop}};
+      
+    if (window.showCrop) {
+      document.body.classList.add("print")
+    } else {
+      document.body.classList.add("screen")
+    }
+  </script>
+  <script src="main.js"></script>
+  <script src="bigtext.js"></script>  
+
+    <script>
+      function loop() {
+        $('#bigtext-1').bigtext({
+          childSelector: 'h1',
+        });
+
+        $('#bigtext-2').bigtext({
+          childSelector: 'h2',
+        });
+      } setInterval(loop, 500);
+    </script>
+    
+  <script src="prefixfree.js"></script>
+  </body>
+</html>
