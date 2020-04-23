@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Museo Sans';
+      }
+
+      h1, h2 {
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 0.9em;
+      }
+
+      .test-background-image {
+        background-image: url('https://outfit-v2-exports-production.s3-ap-southeast-2.amazonaws.com/media_library_items/af24b229567cbe6ddaefe72b3af6ef1a/Now%20Hiring.png');
+        position: absolute; 
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-size: cover;
+        background-repeat: no-repeat;
+        pointer-events: none;
+        opacity: 0.6;
+        z-index: 100;
+      }
+
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+
+      .fit { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+      .cover { background-position: center; background-size: cover; background-repeat: no-repeat; }      
+      .cover { background-position: center; background-size: contain; background-repeat: no-repeat; }      
+      
+      .front-page .container { padding: calc(1.5em + 3mm) 0 calc(1.5em + 3mm) 0; }
+      .front-page .icon-group, .front-page .map { top: 2.7em; }
+      .front-page .hours { top: 2.8em; }
+      
+      .back-page .logo-wrap { top: 0.99em; }
+      .back-page .logo { 
+        justify-content: center; 
+        margin-top: 1px; 
+        text-align: center;
+      }
+      .back-page .logo h1 { 
+        color: {{{account.colors.yellow}}}; 
+        font-size: 1.7em; 
+      }
+      .back-page .logo-clip-top { width: 13.4em; }
+      
+      .container { width: 100%; height: 100%; padding: calc(1.5em + 3mm) 0 calc(0.9em + 3mm) 0; background-color: {{{account.colors.purple}}}; }
+      .background-overlay { position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: {{{account.colors.purple}}}; mix-blend-mode: soft-light; }
+      .border { 
+        position: relative; 
+        width: 816px; 
+        height: 290px; 
+        border-top: 2px solid white; 
+        border-bottom: 2px solid white; mix-blend-mode: screen; }
+
+      .logo-wrap { 
+        position: absolute; 
+        top: 29px; 
+        left: 0; 
+        right: 0; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+      }
+      .logo { 
+        width: 396px; 
+        float: left;
+      }
+      .logo > * {
+        float: left;
+      }
+
+      .logo-wrap p { color: white; margin: 0 0 0 0; font-size: 0.8em; font-weight: 700; }
+
+.logo img,
+      .logo h1 { 
+        width: calc(100% - 34px); /* 34px is the combined width of the plus and minus */
+		padding: 0 0.5rem;
+        height: 55px;
+      }
+
+       .plus,
+      .minus {
+        margin: 20px 0 0;
+        height: 16px;
+        width: 16px;
+        position: relative;
+        background-size: cover;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+      }
+      .plus {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2ee7432835134a59b3cf0dc7895e65d8/plus.svg');
+      }
+      .minus {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/56fcdaec07b4c55402a27534df0f7ec7/minus.svg');
+      }
+      .logo-clip-top { position: absolute; top: -0.5em; left: 0; right: 0; width: 13.4em; height: 1.5em; margin: 0 auto; background-color: black; }
+      .logo-clip-bottom { position: absolute; bottom: -0.5em; left: 0; right: 0; width: 12em; height: 1.5em; margin: 0 auto; background-color: black; }
+
+      .footer-wrap { 
+        position: absolute; 
+        bottom: 47px; 
+        left: 0; 
+        right: 0; 
+        width: 379px; 
+        margin: 0 auto; 
+      }
+      .footer { padding: 0; color: {{{account.colors.yellow}}}; background-color: {{{account.colors.purple}}}; height: 10px; display: flex; align-items: center; justify-content: center; border-left: 2px solid white; border-right: 2px solid white; }
+      .footer h1 { font-size: 0.8em; }
+      .footer span { color: white; }
+
+      .text { position: absolute; top: 4.4em; left: 2em; right: 2em; bottom: 3em; display: flex; flex-direction: column; justify-content: space-between; }
+      .text-wrap { max-height: 1.5em; }
+      .text h1 { color: {{{account.colors.yellow}}}; text-transform: uppercase; font-size: 1.69em; }
+      .text h2 { color: white; margin: 0.6em 0 0 0; text-transform: uppercase; font-size: 0.8em; }
+      .text strong { color: white; font-weight: 900; }
+
+      .icons { width: 100%; margin: 1em 0 0 0; }
+      .icons img { width: 100%; }
+
+      .terms { position: absolute; bottom: 0.7em; left: 1.2em; right: 1.2em; }
+      .terms p { color: white; font-size: 0.3em; }
+      
+      .icon-group { 
+        position: absolute; 
+        left: 1em; 
+        top: 3.2em; 
+        width: 6em; 
+        height: 8em;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+      }
+      .icon-group div {
+        width: 45%;
+        height: 45%;
+      }
+      .map { position: absolute; right: 1em; top: 3.4em; width: 6.2em; height: 217px; border: 2px solid white; }
+
+      .hours { 
+        position: absolute; 
+        top: 71pt; 
+        left: 172pt; 
+        right: 174pt; 
+      }
+      .hours h3, .hours-col { color: white; margin: 0.1em 0 0 0; font-size: 0.8em; font-weight: 900; }
+      .js-type-small {
+        font-size: 0.85em;
+      }
+      .hours-overflow {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 164pt;
+      }
+
+      .row { display: flex; justify-content: space-between; }
+      .address { position: absolute; left: 20.85em; top: 10.6em; width: 6.6em; }
+      .address p { font-size: 0.6em; color: white; font-weight: 700; }
+
+      .img1,
+      .img2,
+      .img3,
+      .img4 {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      .img1 {
+        background-image: url('{{{backImg-topLeft}}}');
+      }
+      .img2 {
+        background-image: url('{{{backImg-topRight}}}');
+      }
+      .img3 {
+        background-image: url('{{{backImg-bottomLeft}}}');
+      }
+      .img4 {
+        background-image: url('{{{backImg-bottomRight}}}');
+      }
+      .icon-group .disclaimer {
+        width: 100%;
+        font-size: 0.2em;
+        color: white;
+        padding: 0.2rem 0 0;
+        height: 4.5em;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+      .disclaimer p {
+      } 
+      .disclaimer.no-free-delivery {
+        display: none;
+      }
+    </style>
+  </head>
+  <body style="background: white">
+
+    <div class="front-page page">
+      <div class="bleed">
+
+        <div class="container contain">
+
+          <div class="border">
+            <div class="logo-clip-top"></div>
+            <div class="logo-clip-bottom"></div>
+          </div>
+
+          <div class="logo-wrap">
+            <div class="logo">
+              <div class="plus">
+              </div>   
+              <img src="{{{account.logos.primary}}}" />
+              <div class="minus">
+              </div>                 
+            </div>
+            <p>{{{team.name}}}</p>
+          </div>
+
+          <div class="text">
+            <div class="text-wrap">
+              <div id="js-bigtext">
+                <h1>{{{ headline }}}</h1>
+              </div>
+            </div>
+            <div class="icons">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/05afb0a338d1a27e97246a265fcaf40e/Icons.svg">
+            </div>
+          </div>
+
+          <div class="footer-wrap">
+            <div class="footer">
+              <h1><span>We're The</span> Batteryologists</h1>
+            </div>
+          </div>
+
+          <div class="terms">
+            <div style="max-height: 0.8em;">
+              <div class="check-overflow">
+                <p>*Offer ends {{{ offer-end }}}{{^offer-end}}[DATE]{{/offer-end}} or while stocks last. Only valid instore at Battery World {{team.name}} on all standard stock. Offer not to be used in conjunction with any other offers or discounts. Excludes special orders, callouts/breakdowns. Bring in this voucher to redeem discount.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!--container--> 
+
+      </div><!--bleed-->
+    </div><!--page-->
+
+    <div class="back-page page">
+      <div class="bleed">
+
+        <div class="container cover">
+
+          <div class="border">
+            <div class="logo-clip-top"></div>
+            <div class="logo-clip-bottom"></div>
+          </div>
+
+          <div class="logo-wrap">
+            <div class="logo">
+              <div class="plus">
+                <span class="vertical"></span>
+                <span class="horizontal"></span>
+              </div>   
+              <h1>Open 7 Days</h1>
+              <div class="minus">
+                <span></span>
+              </div>                 
+            </div>
+          </div>
+
+          <div class="icon-group">
+            <div class="img1"></div>
+            <div class="img2"></div>
+            <div class="img3"></div>
+            <div class="img4"></div>
+            <!--<img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f3cd1a63335d4f44a46f799aa1221cee/Group.svg">-->
+            <div class="disclaimer {{{free-delivery}}}">
+              <p>* Free delivery may not be available outside of business hours or if furter...</p>
+            </div>
+          </div>
+          
+          <div class="map">
+            <div class="map-wrap fit cover" style="background-image: url('{{{team.mudmap}}}')"></div>
+          </div>
+          <div class="address"><p>{{{ team.address }}}</p></div>
+
+          <div class="hours">
+            <div class="hours-wrap">
+              <div class="hours-overflow check-overflow">
+
+                <div class="row">
+                  <div class="col"><h3>Monday</h3></div>
+                  <div class="col hours-col">{{{team.monday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Tuesday</h3></div>
+                  <div class="col hours-col">{{{team.tuesday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Wednesday</h3></div>
+                  <div class="col hours-col">{{{team.wednesday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Thursday</h3></div>
+                  <div class="col hours-col">{{{team.thursday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Friday</h3></div>
+                  <div class="col hours-col">{{{team.friday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Saturday</h3></div>
+                  <div class="col hours-col">{{{team.saturday-opening-hours}}}</div>
+                </div>
+                <div class="row">
+                  <div class="col"><h3>Sunday</h3></div>
+                  <div class="col hours-col">{{{team.sunday-opening-hours}}}</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-wrap">
+            <div class="footer">
+              <h1><span>We're The</span> Batteryologists</h1>
+            </div>
+          </div>
+
+        </div><!--container--> 
+
+      </div><!--bleed-->
+    </div><!--page-->
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.3.min.js" type="text/javascript"></script>
+    <script>
+      window.showCrop = {{show-crop}};
+      
+      TextFit.fit({ selector: '.address p' });
+      TextFit.fit({ 
+        selector: '.disclaimer p',
+        fitMode: 'vertical'
+      });
+
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+      } setInterval(loop, 500);
+
+      checkOpeningHourWidth()
+      
+      function checkOpeningHourWidth() {
+        var hoursCell = document.getElementsByClassName('hours-col');
+        var hoursTable = document.querySelector('.hours-overflow');
+        
+        for (i = 0; i < hoursCell.length; i++) {
+          var element = hoursCell[i]
+          var hourColLength = element.innerText.length;
+
+          if (hourColLength > 12) {
+            hoursTable.classList.add("js-type-small");
+          }
+        }
+      }
+      
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+  </body>
+</html>
