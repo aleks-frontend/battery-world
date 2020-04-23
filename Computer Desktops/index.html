@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <style>
+      * {
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      body{
+        font-family: 'Museo Sans';
+      }
+      
+      h1 {
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1.2em;
+        line-height: 0.9em;
+        margin-bottom: 0.5em;
+      }
+
+      .fit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+      }
+
+      .cover {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      
+      .logo {
+        background-image: url('{{{account.logos.button}}}');
+        position: absolute;
+        top: 0.55em;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 10em;
+        height: 1.5em;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+    </style>
+  </head>
+  <body style="background: white">
+    
+    <div class="page">
+      <div class="bleed center-children">
+        <div class="background-image fit">{{{ comp-background-image }}}</div>
+      </div><!--bleed-->
+    </div><!--page-->
+  
+  <script>
+
+    
+       function loop() {
+         checkHeight(document.getElementsByClassName('headline-overflow'));
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+  </script>
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+  </body>
+</html>
