@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      :root {
+        --bgPurple : {{{account.colors.purple}}};
+        --bgYellow : {{{account.colors.yellow}}};
+      }
+
+      * {
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      html, body {
+        font-size: 10px !important;
+      }
+
+      body{
+        font-family: 'Museo Sans';
+      }
+	  
+      .hide-back-page.back-page {
+        display: none;
+      }
+      
+      .fit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .cover {
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      .test-back {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2f578016c5b7a0a6dbaba4fd6063a829/Greensborough%20-%20Franchisee%20Intro%20-%2020171013_Page_2.png');
+      }
+
+      .container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 1.25em 0.85em 0.9em;
+      }
+
+      .overflow {
+        border: 1px dashed red;
+        position: relative;
+        color: red !important; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+/*
+      .header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 136pt;
+        background-color: var(--bgPurple);
+      }
+*/      
+
+      .logo-container {
+        position: absolute;
+        top: 53pt;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 1pt;
+        flex-shrink: 0;
+        flex-grow: 0;
+        background-color: white;
+      }
+
+      .logo {
+        background-image: url('{{{account.logos.primary}}}');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 247pt;
+        height: 36pt;
+        background-color: var(--bgPurple);
+      }
+
+      .symbol {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 12pt;
+        height: 12pt;
+      }
+
+      .plus {
+        margin-left: 43pt;
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2ee7432835134a59b3cf0dc7895e65d8/plus.svg');
+      }
+
+      .minus {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/56fcdaec07b4c55402a27534df0f7ec7/minus.svg');
+      }
+
+      .header .text {
+        position: absolute;
+        bottom: 21pt;
+        left: 69pt;
+        right: 52pt;
+        display: flex;
+        justify-content: space-between;
+        align-items;
+      }
+
+      .header .text h1 {
+        color: white;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 20pt;
+      }
+
+      .body {
+        position: absolute;
+        top: 136pt;
+        bottom: 125pt;
+        left: 0;
+        right: 0;
+        padding: 22pt 45pt 22pt 55pt;
+      }
+
+      h2 {
+        color: var(--bgPurple);
+        font-size: 14pt;
+        line-height: 1.4em;
+        margin-bottom: 10pt;
+        font-weight: 700;
+      }
+
+      h3 {
+        color: white;
+        font-size: 12pt;
+        line-height: 1.4em;
+        margin-bottom: 10pt;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 11pt;
+        line-height: 1.5em;
+        margin: 0;
+        color: #1F1C1C;
+      }
+
+      .suburb-container {
+        position: absolute;
+        top: 94pt;
+        left: 55pt;
+        right: 45pt;
+        height: 343pt;
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
+
+      .suburb-list {
+        width: 44%;
+        position: relative;
+      }
+
+      .map {
+        background-color: grey;
+        width: 51.4%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .columns {
+        column-count: 2;
+        column-fill: auto;
+        height: 78%;
+        column-gap: 10px;
+      }
+
+      .columns p {
+        font-size: 9pt;
+      }
+
+      .services-list {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .services-list .service {
+        width: 35pt;
+        height: 35pt;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .battery-replacement { background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/11bbe45cbbfb736aeaeadee85c288d31/battery-replacement.svg'); }
+      .tyres { background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/623edda94975980a81a49033ae8c2f0f/tyres.svg'); }
+      .jump-starts { background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/a47d5f0666b6a388f4243b8a63f5c5a6/jump-start.svg');  }
+      .lockout { background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/949d8f38cc38bb08bc87b2a528a2eac2/lockout.svg'); }
+      .fuel { background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/c6fdd7cc887ab2985f0630111fabc617/fuel.svg'); }
+
+      .batteryologist-container {
+        position: absolute;
+        bottom: 24pt;
+        left: 55pt;
+        right: 45pt;
+        height: 115pt;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        flex-grow: 0;
+      }
+
+      .batteryologist-container p {
+        font-size: 9pt;
+      }
+
+      .franchisee-image {
+        position: relative;
+        overflow: hidden;
+        width: 34%;
+        background-color: grey;
+        height: 120pt;
+      }
+      
+      .twentyfour-hour-icon {
+        width: 90pt;
+        height: 90pt;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url('{{{account.logos.24-hour-primary}}}');
+      }
+
+      .three-cols .columns {
+        column-count: 3; }
+      .three-cols .suburb-list {
+        width: 50%; }
+      .three-cols .map {
+        width: 46%; }
+      
+      .overflow-container {
+        height: 525pt;
+      }
+      
+      .three-cols .overflow-container {
+        height: 795pt;
+      }
+
+      /* BACK PAGE STYLES */
+
+      .container {
+        padding: 0;
+      }
+
+      .bg-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 487pt;
+        background-color: grey;
+      }
+
+      .purple-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 373pt;
+        background-color: var(--bgPurple);
+      }
+
+      .bg-container h1 {
+        position: absolute;
+        bottom: 10pt;
+        left: 30pt;
+        right: 30pt;
+        font-size: 33pt;
+        color: white;
+        text-align: center;
+        font-weight: 900;
+        line-height: 1.2em;
+        text-transform: uppercase;
+      }
+
+      .centre-text {
+        padding: 25pt 40pt;
+        height: 220pt;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .centre-text p {
+        font-size: 14pt;
+        color: white;
+        text-align: center;
+        line-height: 1.1em;
+        margin-bottom: 10pt;
+      }
+
+      .centre-text h3 {
+        font-weight: 700;
+        font-size: 14.5pt;
+        margin-top: 10pt;
+        margin-bottom: 0;
+      }
+      
+      .footer-back {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 161pt;
+      }
+      
+      .back-page .logo {
+        width: 281pt;
+        height: 65pt;
+        background-color: initial;
+      }
+      
+      .back-page .twentyfour-hour-icon {
+        position: absolute;
+        right: 57pt;
+        width: 70pt;
+        height: 70pt;
+      }
+      
+      .footer-strip {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        height: 2px;
+        width: 100%;
+        margin-top: 26pt;
+      }
+      
+      .footer-strip .symbol {
+        width: 10pt;
+        height: 10pt;
+      }
+      
+      .footer-strip .plus {
+        margin-left: 0;
+      }
+      
+      .footer-strip p {
+        background-color: var(--bgPurple);
+        font-size: 14pt;
+        font-weight: 300;
+        padding: 0 10pt;
+        color: white;
+      }
+      
+      .disclaimer {
+        margin-top: 20pt;
+        height: 23pt;
+        display: flex;
+        align-items: center;
+      }
+      
+      .disclaimer p {
+        font-size: 8.8pt;
+        color: white;
+        text-align: center;
+      }
+      
+      
+      
+      /* ------------------------------------------------------------------------- */
+      
+      .test-background-image {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f317acb15cda380de3b7e21e71166709/Battery%20world%20placeholder.jpg');
+        position: absolute;
+        opacity: 0.4;
+        z-index: 2;
+        background-position: center;
+        background-size: contain;
+        top: 3mm;
+        bottom: 3mm;
+        left: 3mm;
+        right: 3mm;
+      }
+      
+      .main-container {
+        display: flex;
+        flex-direction: column;
+		position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+      }
+
+      .content {
+        flex: 1;
+        color: #462f97;
+      }
+      
+      .text-container {
+        margin-top: 4px;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .header,
+      .footer {
+        background-color: #462f97;  /* var(--bgPurple); */
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;      
+      }
+
+      .header {
+        justify-content: space-between;
+        padding-top: 3mm;
+        height: 116pt;         	
+      }
+      
+      .footer {
+        justify-content: center;
+        align-items: flex-end;
+        color: #fff;
+        height: 114px;
+    	padding: 0px 70px 36px;
+      }
+      
+      .footer p {
+        color: #fff;
+        font-size: 11pt;
+        line-height: 1.4em;
+        font-weight: 300;
+      }
+      
+      .footer-left {
+        flex: 1;
+    	text-align: left;
+      }
+      
+      .footer-right {
+        flex: 1;
+    	text-align: right;
+      }
+      
+      .line {
+       	height: 3px;
+        background: #fff;
+        flex-basis: 174pt;
+    	margin-bottom: 11pt;
+        position: relative;
+      }
+      
+      .square {
+        display: block;
+        position: absolute;
+        width: 19px;
+        height: 21px;
+        right: 0;
+        bottom: -9px;
+      }
+      
+      .square-left {  
+        background: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/201af7d9ecf3672513835f589a5c1fe8/plus.svg");
+        background-size: 100% 100%;
+        right: -4px;        
+      }
+      
+      .square-right {
+        left: -4px; 
+        background: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/99a9a1e42168623b5cf0ce7d49b225cd/minus.svg");
+        background-size: 100% 100%;
+      } 
+      
+      .logo-battery {
+        display: flex;
+        flex-basis: 320px;
+        align-items: center;
+        flex-direction: column;
+        margin-left: 7px;
+        color: white;     
+        font-size: 13pt;
+    	font-weight: 700;
+      }
+      
+      .logo-battery img {
+        width: 100%;
+      }
+      
+      .logo-battery span {
+        margin-left: -7px        
+      }
+      
+      .content {
+        padding-top: 20px;
+        margin: 0 14pt;
+      }
+      
+      .content p {
+        padding: 0px 42px;
+        color: #462f97;
+      }
+      
+      .content h1 {
+        color: #462f97;
+      }
+
+      .content-line {
+        display: flex;
+        position: relative;
+        width: 100%;
+        margin-top: 10pt;
+        padding: 0px 42px 0 44px;
+      }
+      
+      .content-line img {
+        position: absolute;     
+        left: 237px;
+        top: -7px;
+        width: 40px;
+      }
+      
+      .content-line-left {
+        flex-basis: 212px;
+        background: #462f97;
+        padding: 7px;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-top-left-radius: 15px;
+    	border-bottom-left-radius: 15px;
+      }
+      
+      .content-line-left span {
+        padding-left: 9px;
+        font-size: 16.88pt;
+    	font-weight: 900; 
+      }
+      
+      .content-line-right {
+        display: flex;
+        flex: 2;
+        align-items: center;
+        background: #eeb40a;
+        line-height: 11px;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 12px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+      
+      .content-line-right.u-margin {
+        padding-left: 148px;
+      }
+      
+      .content-line-right span  {
+        padding-left: 24pt;
+        text-transform: initial;
+        color: #462f97;
+    	letter-spacing: 0.1px;
+        font-size: 13.31pt;
+        font-weight: 700;
+      }
+      
+      .content-line.u-padding {
+		margin-top: 20px;
+        padding: 0 50px 0 35px;
+        width: 100%;
+        z-index: 2;
+      }
+      
+      .list-wrapper { 
+        display: flex;
+        width: 100%;
+        margin-top: 13pt;
+        padding: 0px 42px;
+      }
+      
+      .list-wrapper img {
+        width: 42px;
+      }
+      
+      .list-wrapper ul{
+        flex-basis: 48%;   
+      }
+      
+      .list-wrapper ul:first-child {
+        padding-left: 65px;
+        margin-right: 25px;
+      } 
+      
+      .list-wrapper li {       
+        margin-bottom: 9.5pt;
+        display: flex;
+        align-items: center;
+        height: 38px;
+      }
+      
+      .list-wrapper span {
+        margin-left: 9.6pt;
+        margin-top: -3px;
+        font-weight: 500;
+        font-size: 11.37pt;
+        letter-spacing: 0.2px;    
+      }
+      
+      .alert-bar {
+        display: flex;
+        position: relative;
+        background: #462f97;
+        border-radius: 15px;
+        margin: 1px 42px 0px 43px;
+        line-height: 15px;
+        height: 46px;
+      }
+      
+      .alert-bar img {
+        position: absolute;
+        left: 5px;
+        top: 3px;
+        width: 39px;
+    }
+      
+      .alert-bar span {
+        display: flex;
+        align-items: center;
+        padding-right: 88px;
+        padding-left: 66px;
+        font-size: 10.87pt;
+        font-weight: 700;
+        line-height: 1.1em;
+        color: #fff;
+      }   
+      
+      .wrapper-hour {
+        width: 100%;
+        padding: 0px 50px 0 34px;
+        margin-top: -25px;
+      }
+     
+      .wrapper-hour-content {
+        position: relative;
+        margin-left: 1px;
+        padding: 37px 15px 4px; 15px;
+        border: 2px solid #eeb40a;
+        border-radius: 8px;
+        border-top: none;
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+      }
+      
+      .clock {
+        position: absolute;
+        width: 115px;
+		right: -14px;
+    	top: 49px;   	
+      }
+      
+      .wrapper-hour-content h1 {
+        margin-bottom: 5px;
+        font-size: 23.91pt;
+        font-weight: 900;
+      }
+      
+      .wrapper-hour-content p {
+        padding: 0 110px 9px 0;
+        font-size: 9.11pt;
+        font-weight: 500;
+      }
+      
+      .description {
+        padding: 8px 105px 0 0;
+      }
+      
+      .description p {
+        padding-left: 33px;        
+        font-size: 7.8pt;
+        color: #462f97;
+        line-height: 1.3;     
+      }
+         
+      .franchise-name {
+        font-size: 12pt;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      
+      .address,
+      .phone,
+      .e-mail {
+        font-size: 11pt;
+        font-weight: 300;
+      }
+      
+      .address {
+        line-height: 24px;
+      }
+    </style>
+  </head>
+  
+  <body style="background: white">
+     <!--logo-container-->
+    <div class="page">
+      <div class="bleed center-children">
+        <!--<div class="test-background-image"></div>-->
+
+        <div class="main-container">
+          <div class="header">
+            <div class="line">
+              <div class="square square-left"></div>
+            </div>
+            <div class="logo-battery">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f3e7baf12c9a121e2882b115eb13ff29/Group%2012.svg" alt="logo">
+              <span>{{{team.name}}}</span>
+            </div>
+            <div class="line">
+              <div class="square square-right"></div>
+            </div>
+          </div><!-- end header -->          
+          <div class="content">  
+            <div class="text-container" style="font-size: 11.11pt; height: 6.5em;">
+              <div class="check-overflow" style="font-size: 11.11pt;">
+                <p style="font-size: 11.11pt; font-weight: 500;">{{{ intro-copy }}}</p>
+              </div>
+            </div><!-- end text-container -->
+            <div class="content-line">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/a04ac5f32a7dfa14ba1387c48513f936/light-bulb.svg" alt="">
+              <div class="content-line-left">
+                <span>huge range</span>
+              </div>
+              <div class="content-line-right">
+              	 <span>From trucks to hearing aids, we have you covered</span> 
+              </div>
+            </div>     
+            <div class="list-wrapper">
+               <ul>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/63d97513a005e25c601e8e6461709b2a/auto.svg" alt="">
+                   <span>Car, european and stop start</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/8d039216d63a3ad3f1db3843181519c6/trucking.svg" alt="">
+                   <span>Truck and equipment</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/c3c72efd0d47f5f5988e9fefbcc4767f/boating.svg" alt="">
+                   <span>Boat and leisure</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/bea2f7db715927ce79008c01844d1956/moto.svg" alt="">
+                   <span>Motorbike and scooter</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/49497ce23e2c901f60da722a02a1cc12/camping.svg" alt="">
+                   <span>Camping and solar</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/c22334bd98d14db837653bee2f123cf7/caravan.svg" alt="">
+                   <span>Caravan and 4WD</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/d2dea0f643ce9f3999161d0c71222a5d/lock.svg" alt="">
+                   <span>Garage and car remotes</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/5554738ca30992147d5daa188d2927ef/medical.svg" alt="">
+                   <span>Health</span>
+                 </li>         
+              </ul>          
+              <ul>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/0c24c147a0c96bd25c7c08fcc97b36c8/power-tools.svg" alt="">
+                   <span>Drills and tools</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/9d43ad6ee9da0d77187eb56631bebc56/battery.svg" alt="">
+                   <span>Chargers and accessories</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3c4f00aeb017a9638a7ce6d0ec4655d8/computer.svg" alt="">
+                   <span>Laptop, gaming and computers</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/223e1fb21058b602608994ce90bbbd79/house.svg" alt="">
+                   <span>Household, Office & Security </span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3cdf584d3b600d33f4ca9aa2c7c66c3b/iphone.svg" alt="">
+                   <span>Mobile phones and devices</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/ce4009ad8b36f463bebe8a4a782efcb6/photo.svg" alt="">
+                   <span>Photo and video cameras</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f33fdade078f4dde43abaf54c47a59be/golf.svg" alt="">
+                   <span>Lawn, Golf and Mobility</span>
+                 </li>
+                 <li>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2302e3ab1e9e0a5409c7ea96571a1e66/industrial.svg" alt="">
+                   <span>Industrial</span>
+                 </li>         
+              </ul>          
+            </div><!-- end list-wrapper-->  
+            <div class="alert-bar">
+              <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/7484aecae20bd15e6b558a6f94b82469/exclamation.svg" alt="">             
+              <span>If you have a special item that requires a special battery we can either order it in or we may be able to build it for you.</span>
+            </div>        
+              <div class="content-line u-padding">
+                <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/a04ac5f32a7dfa14ba1387c48513f936/light-bulb.svg" alt="">
+                <div class="content-line-left">
+                  <span>great advice</span>
+                </div>
+                <div class="content-line-right u-margin">
+                  <span>Ask the Experts</span> 
+                </div>
+              </div>             
+              <div class="wrapper-hour">
+                 <div class="wrapper-hour-content">
+                   <h1>DID YOU KNOW?</h1>
+                   <p>We operate a 24/7 call out service including home or roadside delivery and installation of automotive batteries all with a fully comprehensive national warranty. We offer a free call out & delivery service during business hours for battery sales.*</p>
+                   <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/04fc882bba51868e9cf7b6198b611bd2/24-hour-icon.svg" alt="" class="clock">
+                 </div>
+              </div>
+            
+              <div class="description">
+                  <p>*Conditions apply. Offers available at the Battery World store listed below. If the 24hr mobile service assistance is outside of business hours charges may apply. Call out only available within 8km from the Battery World store.</p>
+              </div> 
+          	</div>    
+             <div class="footer">
+                <div class="footer-left">
+                    <div class="franchise-name">Battery World {{{team.name}}}</div>
+                    <div style="max-height: 2.8em; overflow: hidden; font-size: 15px;">
+                      <div class="check-overflow" style="font-size: 15px;">
+                        <p style="font-size: 15px;">{{{team.address}}}</p>
+                      </div>
+                    </div>    
+                </div>
+                <div class="footer-right">
+                    <div class="phone">T: {{{team.phone}}}</div>
+                    <div class="e-mail">E: {{{e-mail}}}</div>
+                </div>
+             </div> 
+          </div><!-- end main-container --> 
+      
+        </div><!--container-->
+      </div><!--bleed-->
+    </div><!--page-->
+    
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="bigtext.js"></script>
+  <script>
+    window.showCrop = {{show-crop}};
+    
+    if (window.showCrop) {
+      document.body.classList.add("print")
+    } else {
+      document.body.classList.add("screen")
+    }
+    
+       function loop() {
+         checkHeight(document.getElementsByClassName('check-overflow'));
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+    
+    function countElementLines(e) {
+      const height = e.clientHeight;
+      const lineHeight = parseFloat(window.getComputedStyle(e).getPropertyValue('line-height'));
+      const lines = Math.ceil(height / lineHeight);
+
+      return lines;
+    }
+
+    function checkLimitedText() {
+      Array.prototype.slice.call(document.querySelectorAll('.textLimited'))
+        .forEach(function (e) {
+        const limit = e.getAttribute('data-limit');
+        const lines = countElementLines(e);
+
+        if (lines > limit) {
+          e.classList.add("overflow");
+        } else {
+          e.classList.remove("overflow");
+        }
+      });
+    }
+
+    setInterval(checkLimitedText, 1000);
+  </script>
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+  </body>
+</html>
