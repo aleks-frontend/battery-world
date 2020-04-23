@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+  <!-- {{ table-headline }} {{ brand-name }} {{ brand-name-table }} {{ Disclaimer }}  -->
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Museo%20Sans/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      :root {
+        --bgPurple : {{{account.colors.purple}}};
+        --bgYellow : {{{account.colors.yellow}}};
+      }
+
+      * {
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      html, body {
+        font-size: 10px !important;
+      }
+
+      body{
+        font-family: 'Museo Sans';
+      }
+      
+      
+
+      .overflow {
+        border: 1px dashed red;
+        position: relative;
+        color: red !important; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      
+      
+      
+      /* ------------------------------------------------------------------------- */
+      
+      .test-background-image {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/4b834ed5865ce5b8a53ff0d8db5a269a/battery-world-B2B%20price-sheet-1.jpg');
+        position: absolute;
+        opacity: 0.1;
+        z-index: 2;
+        background-position: center;
+        background-size: contain;
+        top: 3mm;
+        bottom: 3mm;
+        left: 3mm;
+        right: 3mm;
+      }
+      
+    /* Classes for layout elements */      
+    .main-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #413293;
+    }
+      
+    .content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 36pt 39pt 0;
+        padding: 40pt 46pt 20pt 40pt;
+        height: 540pt;
+        border: 3px solid white;
+        border-radius: 23pt;        
+    }
+      
+    .less-than-12 .content {
+        justify-content: space-between;
+    }
+      
+    .top-section {
+		margin-bottom: 27pt;
+    }
+      
+      .less-than-12 .top-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+      }
+      
+    /* Classes for modules */
+    .logo {
+      width: 216pt;
+    }
+      
+    .logo-wrapper {
+        position: absolute;
+        padding: 0 15pt 0 22pt;
+        top: 0;
+        right: 61pt;
+        background: #413293;
+        transform: translateY(-50%);
+      }
+      
+      .logo-wrapper::before,
+      .logo-wrapper::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: -1.5pt;
+        width: 13pt;
+        height: 13pt;
+        transform: translateY(-53%);
+        background-image: url(https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/201af7d9ecf3672513835f589a5c1fe8/plus.svg);
+        background-repeat: no-repeat;
+        background-size: 100%;
+      }
+      
+      .logo-wrapper::after {
+        left: auto;
+        top: 20pt;
+        right: -5pt; 
+        background-image: url(https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/99a9a1e42168623b5cf0ce7d49b225cd/minus.svg);
+      }    
+      
+      .table-heading {
+        padding: 4.5pt;
+        font-size: 13pt;
+        font-weight: 700;
+        color: #fff;
+        border: 1pt solid #fff;        
+        text-align: center;
+      }
+      
+      .table {
+        width: 100%;
+        background: #fff;        
+        border: 1px solid #fff;
+        border-bottom: none;
+        table-layout: fixed;
+      }
+      
+      .table th {
+        padding: 5pt;
+        padding-left: 7pt;
+        font-size: 12pt;
+        font-weight: 700;
+      }
+      
+      .table td {
+        padding: 5pt;
+        height: 24pt;
+        padding-left: 7pt;
+        font-size: 10pt;
+        font-weight: 300;        
+        border: 1pt solid #413293;        
+      }
+      
+      .table td:first-child {
+        border-left: none;
+      }      
+      
+      .table td:last-child {
+        border-right: none;
+      }    
+      
+      .icons-heading {
+        font-size: 25.47pt;
+        font-weight: 900;
+        color: #fff;
+        text-transform: uppercase;
+      }
+      
+      .icons-heading--secondary {
+        color: #FCB813;
+      }
+      
+      .icons-grid {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-left: -44pt;
+        margin-top: -3pt;
+        width: calc(100% + 44pt + 7pt); /* Had to add this crazy calc to stick last icons to the right edge */
+      }
+      
+      .more-than-12 .icons-grid {
+        display: none;
+      }
+      
+      .icons-item {
+        margin-left: 44pt;
+        margin-top: 3pt;        
+        width: 45pt;
+      }
+      
+      .icons-item img{
+        width: 100%;
+      }
+      
+      .disclaimer-section {
+        text-align: right;
+        margin-top: 5.8pt;
+        margin-right: 37pt;
+        font-size: 8.9pt;
+        color: #fff;
+        font-weight: 300;
+      }   
+      
+      /* Helper Classes for spacings ... */
+      .u-mb3 {
+        margin-bottom: 3pt;
+      }
+      
+  
+  
+      
+    </style>
+  </head>
+  
+  <body style="background: white">
+     <!--logo-container-->
+    <div class="page">
+      <div class="bleed center-children">
+        <!--<div class="test-background-image"></div>-->
+        
+          <div class="main-container">
+            <div class="content">
+              <div class="logo-wrapper">  
+                  <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f3e7baf12c9a121e2882b115eb13ff29/Group%2012.svg" class="logo" alt="Logo" />
+              </div>
+              <div class="top-section"> 
+                
+              {{#table-headline}} 
+              <div class="table-heading">
+                <div style="max-height: 2.05em;; overflow: hidden; font-size: 13pt;">
+                   <div class="check-overflow">
+                      <p style="font-size: 13pt;">{{{ table-headline }}}</p>
+                   </div>
+                </div>
+              </div>
+              {{/table-headline}}  
+                
+              <table class="table">             
+                <tr>
+                  <th style="width: 65pt;">Product</th>
+                  <th style="width: 383pt;">Sales Description</th>
+                  <th style="width: 159pt;">Category</th>
+                  <th class="js-brandNameTable"></th>
+                </tr>	
+
+                {{ #spreadsheet.price-sheet }}
+                <tr>
+                  <td>{{{ 1 }}}</td>
+                  <td>{{{ 2 }}}</td>
+                  <td>{{{ 3 }}}</td>
+                  <td>{{{ 4 }}}</td>
+                </tr>
+                {{ /spreadsheet.price-sheet }}
+
+              </table>        
+        	 </div>
+              <div class="bottom-section"> 
+                <div style="max-height: 1.2em;; overflow: hidden; font-size: 25.47pt;">
+                  <div class="check-overflow">
+                    <p class="icons-heading" style="font-size: 25.47pt;">{{{ brand-name }}}</p>
+                  </div>
+                </div> 
+                <p class="icons-heading icons-heading--secondary u-mb3">BATTERIES AND CHARGERS FOR EVERYTHING</p>
+                <ul class="icons-grid">
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/63d97513a005e25c601e8e6461709b2a/auto.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/49497ce23e2c901f60da722a02a1cc12/camping.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/0c24c147a0c96bd25c7c08fcc97b36c8/power-tools.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3cdf584d3b600d33f4ca9aa2c7c66c3b/iphone.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/c3c72efd0d47f5f5988e9fefbcc4767f/boating.svg" alt="">
+                  </li> 
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/d2dea0f643ce9f3999161d0c71222a5d/lock.svg" alt="">
+                  </li> 
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3c4f00aeb017a9638a7ce6d0ec4655d8/computer.svg" alt="">
+                  </li> 
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/f33fdade078f4dde43abaf54c47a59be/golf.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/8d039216d63a3ad3f1db3843181519c6/trucking.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/c22334bd98d14db837653bee2f123cf7/caravan.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/9d43ad6ee9da0d77187eb56631bebc56/battery.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/ce4009ad8b36f463bebe8a4a782efcb6/photo.svg" alt="">
+                  </li>
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/bea2f7db715927ce79008c01844d1956/moto.svg" alt="">
+                  </li> 
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/5554738ca30992147d5daa188d2927ef/medical.svg" alt="">
+                  </li> 
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/223e1fb21058b602608994ce90bbbd79/house.svg" alt="">
+                  </li> 
+                  <li class="icons-item">
+                    <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/2302e3ab1e9e0a5409c7ea96571a1e66/industrial.svg" alt="">
+                  </li>         
+                </ul>
+              </div>
+             </div>
+            <div class="disclaimer-section">{{{ Disclaimer }}}</div>
+          </div>
+
+        </div><!--container-->
+      </div><!--bleed-->
+    </div><!--page-->
+    
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="bigtext.js"></script>
+  <script>
+    window.showCrop = {{show-crop}};
+    
+    if (window.showCrop) {
+      document.body.classList.add("print")
+    } else {
+      document.body.classList.add("screen")
+    }
+    
+       function loop() {
+         checkHeight(document.getElementsByClassName('check-overflow'));
+         maxRowsCounter('table', 12);
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+    
+    function countElementLines(e) {
+      const height = e.clientHeight;
+      const lineHeight = parseFloat(window.getComputedStyle(e).getPropertyValue('line-height'));
+      const lines = Math.ceil(height / lineHeight);
+
+      return lines;
+    }
+    
+    function maxRowsCounter(tableClass, maxRows) {
+      const rowsNum = document.querySelectorAll(`.${tableClass} tr`).length;
+      if (rowsNum < maxRows) {
+        document.body.classList.remove('more-than-12');        
+        document.body.classList.add('less-than-12');
+      } else {
+        document.body.classList.remove('less-than-12');
+        document.body.classList.add('more-than-12');
+      }
+    }
+
+    function checkLimitedText() {
+      Array.prototype.slice.call(document.querySelectorAll('.textLimited'))
+        .forEach(function (e) {
+        const limit = e.getAttribute('data-limit');
+        const lines = countElementLines(e);
+
+        if (lines > limit) {
+          e.classList.add("overflow");
+        } else {
+          e.classList.remove("overflow");
+        }
+      });
+    }
+    
+    // ADDING BRAND NAME TABLE WORDING
+     var brandNameTable = document.getElementsByClassName('js-brandNameTable');
+     for ( i = 0 ; i < brandNameTable.length ; i++ ) {
+       brandNameTable[i].innerHTML = '{{{ brand-name-table }}}'
+     };
+
+    setInterval(checkLimitedText, 1000);
+  </script>
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+  </body>
+</html>
